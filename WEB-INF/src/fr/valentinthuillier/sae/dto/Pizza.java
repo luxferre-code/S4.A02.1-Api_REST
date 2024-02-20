@@ -1,11 +1,10 @@
 package fr.valentinthuillier.sae.dto;
 
-import java.util.Arrays;
-
 /**
  * Pizza Class - Cette classe permet de manipuler les objets de type Pizza.
- * @see Ingredient
+ *
  * @author Valentin THUILLIER
+ * @see Ingredient
  */
 public class Pizza {
 
@@ -83,30 +82,28 @@ public class Pizza {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if(this == obj)
             return true;
-        if (obj == null)
+        if(obj == null)
             return false;
-        if (getClass() != obj.getClass())
+        if(getClass() != obj.getClass())
             return false;
         Pizza other = (Pizza) obj;
-        if (id != other.id)
+        if(id != other.id)
             return false;
-        if (nom == null) {
-            if (other.nom != null)
+        if(nom == null) {
+            if(other.nom != null)
                 return false;
-        } else if (!nom.equals(other.nom))
+        } else if(!nom.equals(other.nom))
             return false;
-        if (pate == null) {
-            if (other.pate != null)
+        if(pate == null) {
+            if(other.pate != null)
                 return false;
-        } else if (!pate.equals(other.pate))
+        } else if(!pate.equals(other.pate))
             return false;
-        if (Double.doubleToLongBits(prix) != Double.doubleToLongBits(other.prix))
+        if(Double.doubleToLongBits(prix) != Double.doubleToLongBits(other.prix))
             return false;
-        if (!ingredients.equals(other.ingredients))
-            return false;
-        return true;
+        return ingredients.equals(other.ingredients);
     }
 
     @Override
@@ -114,5 +111,5 @@ public class Pizza {
         return "Pizza [id=" + id + ", nom=" + nom + ", pate=" + pate + ", prix=" + prix + ", ingredients="
                 + ingredients + "]";
     }
-    
+
 }

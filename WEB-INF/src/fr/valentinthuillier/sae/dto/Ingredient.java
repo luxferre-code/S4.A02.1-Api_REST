@@ -2,11 +2,12 @@ package fr.valentinthuillier.sae.dto;
 
 /**
  * Ingredient Class - Cette classe permet de représenté un ingrédient inscrit dans la base de données.
+ *
  * @author Valentin THUILLIER
  * @version 1.0
  */
 public class Ingredient {
-    
+
     private int id;
     private String nom;
     private double prix;
@@ -64,25 +65,22 @@ public class Ingredient {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if(this == obj)
             return true;
-        if (obj == null)
+        if(obj == null)
             return false;
-        if (getClass() != obj.getClass())
+        if(getClass() != obj.getClass())
             return false;
         Ingredient other = (Ingredient) obj;
-        if (id != other.id)
+        if(id != other.id)
             return false;
-        if (nom == null) {
-            if (other.nom != null)
+        if(nom == null) {
+            if(other.nom != null)
                 return false;
-        } else if (!nom.equals(other.nom))
+        } else if(!nom.equals(other.nom))
             return false;
-        if (Double.doubleToLongBits(prix) != Double.doubleToLongBits(other.prix))
-            return false;
-        return true;
+        return Double.doubleToLongBits(prix) == Double.doubleToLongBits(other.prix);
     }
 
-    
 
 }

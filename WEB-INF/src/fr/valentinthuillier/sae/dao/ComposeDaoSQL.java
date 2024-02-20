@@ -1,23 +1,24 @@
 package fr.valentinthuillier.sae.dao;
 
+import fr.valentinthuillier.sae.DS;
+import fr.valentinthuillier.sae.dto.Compose;
+import fr.valentinthuillier.sae.dto.Ingredient;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.valentinthuillier.sae.DS;
-import fr.valentinthuillier.sae.dto.Compose;
-import fr.valentinthuillier.sae.dto.Ingredient;
-
 /**
  * ComposeDaoSQL Class - Cette classe permet de manipuler les objets de type Compose dans la base de données.
+ *
+ * @author Valentin THUILLIER
  * @see IDao
  * @see Compose
  * @see Ingredient
  * @see DS
  * @see IngredientDaoSQL
- * @author Valentin THUILLIER
  */
 public class ComposeDaoSQL implements IDao<Compose> {
 
@@ -28,7 +29,7 @@ public class ComposeDaoSQL implements IDao<Compose> {
         Compose compose = null;
         List<Ingredient> ingredients = new ArrayList<>();
         try(Connection con = DS.getConnection()) {
-            
+
             PreparedStatement ps = con.prepareStatement("SELECT ingredient FROM compose WHERE pizza = ?");
             ps.setInt(1, id_pizza);
             ResultSet rs = ps.executeQuery();
@@ -97,5 +98,5 @@ public class ComposeDaoSQL implements IDao<Compose> {
             return false;
         }
     }
-    
+
 }

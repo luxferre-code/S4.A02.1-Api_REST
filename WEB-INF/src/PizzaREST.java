@@ -1,10 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import fr.valentinthuillier.sae.dao.ComposeDaoSQL;
 import fr.valentinthuillier.sae.dao.IDao;
 import fr.valentinthuillier.sae.dao.IngredientDaoSQL;
@@ -17,18 +11,25 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+
 @WebServlet("/pizzas/*")
 public class PizzaREST extends HttpServlet {
-    
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String info = req.getPathInfo();
-        if(info == null) { info = ""; }
+        if(info == null) {
+            info = "";
+        }
         String[] parts = info.split("/");
 
         if(parts[0].isEmpty()) {
-            String[] newParts = new String[parts.length-1];
-            for(int i = 1; i < parts.length; i++) { newParts[i-1] = parts[i]; }
+            String[] newParts = new String[parts.length - 1];
+            System.arraycopy(parts, 1, newParts, 0, parts.length - 1);
             parts = newParts;
         }
 
@@ -42,7 +43,9 @@ public class PizzaREST extends HttpServlet {
         switch(parts.length) {
             case 0:
                 Pizza[] pizzas = pizzaDao.findAll();
-                if(pizzaDao == null) { pizzas = new Pizza[0]; }
+                if(pizzaDao == null) {
+                    pizzas = new Pizza[0];
+                }
                 out.println(mapper.writeValueAsString(pizzas));
                 break;
             case 1:
@@ -94,7 +97,6 @@ public class PizzaREST extends HttpServlet {
                 break;
             default:
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid path info");
-                return;
         }
 
     }
@@ -123,7 +125,7 @@ public class PizzaREST extends HttpServlet {
                 return;
             }
             resp.setStatus(HttpServletResponse.SC_CREATED);
-        } catch (Exception e) {
+        } catch(Exception e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
@@ -131,20 +133,22 @@ public class PizzaREST extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String info = req.getPathInfo();
-        if(info == null) { info = ""; }
+        if(info == null) {
+            info = "";
+        }
         String[] parts = info.split("/");
 
         if(parts[0].isEmpty()) {
-            String[] newParts = new String[parts.length-1];
-            for(int i = 1; i < parts.length; i++) { newParts[i-1] = parts[i]; }
+            String[] newParts = new String[parts.length - 1];
+            System.arraycopy(parts, 1, newParts, 0, parts.length - 1);
             parts = newParts;
         }
-        
+
         IDao<Pizza> dao = new PizzaDaoSQL();
         Pizza pizza = null;
         int id = -1;
 
-        switch (parts.length) {
+        switch(parts.length) {
             case 1:
                 id = IngredientREST.parseInt(parts[0]);
                 if(id == -1) {
@@ -196,7 +200,6 @@ public class PizzaREST extends HttpServlet {
                 break;
             default:
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid path info");
-                return;
         }
 
     }

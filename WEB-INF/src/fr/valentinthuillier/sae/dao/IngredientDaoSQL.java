@@ -1,23 +1,24 @@
 package fr.valentinthuillier.sae.dao;
 
+import fr.valentinthuillier.sae.DS;
+import fr.valentinthuillier.sae.dto.Ingredient;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.valentinthuillier.sae.DS;
-import fr.valentinthuillier.sae.dto.Ingredient;
-
 /**
  * IngredientDao Class - Cette classe permet de manipuler les objets de type Ingredient dans la base de données.
+ *
+ * @author Valentin THUILLIER
  * @see IDao
  * @see Ingredient
  * @see DS
- * @author Valentin THUILLIER
  */
 public class IngredientDaoSQL implements IDao<Ingredient> {
-    
+
     public IngredientDaoSQL() {
         // Do nothing
     }
@@ -98,5 +99,5 @@ public class IngredientDaoSQL implements IDao<Ingredient> {
             return false;
         }
     }
-    
+
 }

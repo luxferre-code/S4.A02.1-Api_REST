@@ -1,10 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import fr.valentinthuillier.sae.dao.IDao;
 import fr.valentinthuillier.sae.dao.IngredientDaoSQL;
 import fr.valentinthuillier.sae.dto.Ingredient;
@@ -14,15 +8,29 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+
 /**
  * IngredientREST - Servlet REST permettant de gérer les ingrédients
+ *
  * @author Valentin THUILLIER
  * @see Ingredient
  * @see IngredientDaoSQL
  */
 @WebServlet("/ingredients/*")
 public class IngredientREST extends HttpServlet {
-    
+
+    static int parseInt(String string) throws IOException {
+        try {
+            return Integer.parseInt(string);
+        } catch(NumberFormatException e) {
+            return -1;
+        }
+    }
+
     /**
      * GET /ingredients pour obtenir la collection de tous les ingrédients
      * GET /ingredients/{id} pour obtenir un ingrédient particulier
@@ -31,12 +39,14 @@ public class IngredientREST extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String info = req.getPathInfo();
-        if(info == null) { info = ""; }
+        if(info == null) {
+            info = "";
+        }
         String[] parts = info.split("/");
 
         if(parts[0].isEmpty()) {
-            String[] newParts = new String[parts.length-1];
-            for(int i = 1; i < parts.length; i++) { newParts[i-1] = parts[i]; }
+            String[] newParts = new String[parts.length - 1];
+            System.arraycopy(parts, 1, newParts, 0, parts.length - 1);
             parts = newParts;
         }
         // Affiche ou est ce que le fichier est executé
@@ -50,12 +60,12 @@ public class IngredientREST extends HttpServlet {
         int id = -1;
         Ingredient ingredient = null;
 
-        switch (parts.length) {
+        switch(parts.length) {
             case 0:
                 try {
                     String jsonstring = objectMapper.writeValueAsString(dao.findAll());
                     out.println(jsonstring);
-                } catch (Exception e) {
+                } catch(Exception e) {
                     resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
                 }
                 break;
@@ -83,7 +93,7 @@ public class IngredientREST extends HttpServlet {
                 if(ingredient == null) {
                     resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Ingredient not found");
                 } else {
-                    switch (parts[1].toLowerCase()) {
+                    switch(parts[1].toLowerCase()) {
                         case "name":
                             out.println(objectMapper.writeValueAsString(ingredient.getNom()));
                             break;
@@ -98,17 +108,8 @@ public class IngredientREST extends HttpServlet {
                 break;
             default:
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid path info");
-                return;
         }
 
-    }
-
-    static int parseInt(String string) throws IOException {
-        try {
-            return Integer.parseInt(string);
-        } catch (NumberFormatException e) {
-            return -1;
-        }
     }
 
     @Override
@@ -134,7 +135,7 @@ public class IngredientREST extends HttpServlet {
                 return;
             }
             resp.setStatus(HttpServletResponse.SC_CREATED);
-        } catch (Exception e) {
+        } catch(Exception e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }
@@ -142,15 +143,17 @@ public class IngredientREST extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String info = req.getPathInfo();
-        if(info == null) { info = ""; }
+        if(info == null) {
+            info = "";
+        }
         String[] parts = info.split("/");
 
         if(parts[0].isEmpty()) {
-            String[] newParts = new String[parts.length-1];
-            for(int i = 1; i < parts.length; i++) { newParts[i-1] = parts[i]; }
+            String[] newParts = new String[parts.length - 1];
+            System.arraycopy(parts, 1, newParts, 0, parts.length - 1);
             parts = newParts;
         }
-        
+
         ObjectMapper objectMapper = new ObjectMapper();
         IDao<Ingredient> dao = new IngredientDaoSQL();
         Ingredient ingredient = null;

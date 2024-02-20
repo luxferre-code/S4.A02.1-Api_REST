@@ -1,16 +1,18 @@
 package fr.valentinthuillier.sae.dao;
 
+import fr.valentinthuillier.sae.DS;
+import fr.valentinthuillier.sae.dto.Pizza;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import fr.valentinthuillier.sae.DS;
-import fr.valentinthuillier.sae.dto.Pizza;
-
 /**
  * PizzaDaoSQL Class - Cette classe permet de manipuler les objets de type Pizza dans la base de données.
+ *
+ * @author Valentin THUILLIER
  * @see IDao
  * @see Pizza
  * @see IngredientDaoSQL
@@ -18,7 +20,6 @@ import fr.valentinthuillier.sae.dto.Pizza;
  * @see Ingredient
  * @see Compose
  * @see DS
- * @author Valentin THUILLIER
  */
 public class PizzaDaoSQL implements IDao<Pizza> {
 
@@ -100,5 +101,4 @@ public class PizzaDaoSQL implements IDao<Pizza> {
     }
 
 
-    
 }

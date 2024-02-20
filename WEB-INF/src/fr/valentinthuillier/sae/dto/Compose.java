@@ -4,9 +4,10 @@ import java.util.Arrays;
 
 /**
  * Compose Class - Cette classe permet de manipuler les objets de type Compose.
+ *
+ * @author Valentin THUILLIER
  * @see Ingredient
  * @see Pizza
- * @author Valentin THUILLIER
  */
 public class Compose {
 
@@ -54,18 +55,16 @@ public class Compose {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if(this == obj)
             return true;
-        if (obj == null)
+        if(obj == null)
             return false;
-        if (getClass() != obj.getClass())
+        if(getClass() != obj.getClass())
             return false;
         Compose other = (Compose) obj;
-        if (id_pizza != other.id_pizza)
+        if(id_pizza != other.id_pizza)
             return false;
-        if (!Arrays.equals(ingredients, other.ingredients))
-            return false;
-        return true;
+        return Arrays.equals(ingredients, other.ingredients);
     }
 
     @Override
@@ -73,6 +72,5 @@ public class Compose {
         return "Compose [id_pizza=" + id_pizza + ", ingredients=" + Arrays.toString(ingredients) + "]";
     }
 
-    
-    
+
 }
