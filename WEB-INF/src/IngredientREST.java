@@ -1,5 +1,6 @@
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -29,20 +30,24 @@ public class IngredientREST extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String info = req.getPathInfo();
-        if(info == null) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Missing path info");
-            return;
-        }
+        if(info == null) { info = ""; }
+        System.out.println(info);
         String[] parts = info.split("/");
 
+        if(parts[0].isEmpty()) {
+            String[] newParts = new String[parts.length-1];
+            for(int i = 1; i < parts.length; i++) { newParts[i-1] = parts[i]; }
+            parts = newParts;
+        }
+
         IDao<Ingredient> dao = new IngredientDaoSQL();
+        ObjectMapper objectMapper = new ObjectMapper();
 
         resp.setContentType("application/json;charset=UTF-8");
         PrintWriter out = resp.getWriter();
 
         switch (parts.length) {
             case 0:
-                ObjectMapper objectMapper = new ObjectMapper();
                 try {
                     String jsonstring = objectMapper.writeValueAsString(dao.findAll());
                     out.println(jsonstring);
@@ -51,7 +56,14 @@ public class IngredientREST extends HttpServlet {
                 }
                 break;
             case 1:
-                //TODO: cas GET /ingredients/{id}
+                int id = parseInt(parts[0], resp);
+                Ingredient ingredient = dao.findById(id);
+                if(ingredient == null) {
+                    resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Ingredient not found");
+                } else {
+                    String json = objectMapper.writeValueAsString(ingredient);
+                    out.println(json);
+                }
                 break;
             case 2:
                 //TODO: cas GET /ingredients/{id}/name
@@ -61,6 +73,15 @@ public class IngredientREST extends HttpServlet {
                 return;
         }
 
+    }
+
+    private int parseInt(String string, HttpServletResponse resp) throws IOException {
+        try {
+            return Integer.parseInt(string);
+        } catch (NumberFormatException e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid id type, please give a number");
+            return -1;
+        }
     }
 
     @Override
