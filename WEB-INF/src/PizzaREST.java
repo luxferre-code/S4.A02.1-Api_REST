@@ -1,8 +1,12 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import fr.valentinthuillier.sae.dao.IDao;
+import fr.valentinthuillier.sae.dao.IngredientDaoSQL;
 import fr.valentinthuillier.sae.dao.PizzaDaoSQL;
 import fr.valentinthuillier.sae.dto.Ingredient;
 import fr.valentinthuillier.sae.dto.Pizza;
@@ -92,6 +96,34 @@ public class PizzaREST extends HttpServlet {
                 return;
         }
 
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String json = new BufferedReader(new InputStreamReader(req.getInputStream())).readLine();
+        System.out.println(json);
+        if(json == null || json.isBlank()) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JSON");
+            return;
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        Pizza pizza = null;
+        try {
+            pizza = objectMapper.readValue(json, Pizza.class);
+        } catch(Exception e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JSON");
+            return;
+        }
+        IDao<Pizza> dao = new PizzaDaoSQL();
+        try {
+            if(!dao.save(pizza)) {
+                resp.sendError(HttpServletResponse.SC_CONFLICT, "Pizza already exists");
+                return;
+            }
+            resp.setStatus(HttpServletResponse.SC_CREATED);
+        } catch (Exception e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+        }
     }
 
 }
