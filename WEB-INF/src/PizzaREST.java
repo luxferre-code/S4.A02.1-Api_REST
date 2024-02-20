@@ -101,6 +101,7 @@ public class PizzaREST extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //TODO: manque POST /pizzas/{id} ajout d’un ingrédient à une pizza
         String json = new BufferedReader(new InputStreamReader(req.getInputStream())).readLine();
         System.out.println(json);
         if(json == null || json.isBlank()) {
