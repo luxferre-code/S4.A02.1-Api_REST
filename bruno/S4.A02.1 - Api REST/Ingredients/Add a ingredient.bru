@@ -1,0 +1,19 @@
+meta {
+  name: Add a ingredient
+  type: http
+  seq: 7
+}
+
+post {
+  url: http://localhost:8080/sae/ingredient
+  body: none
+  auth: none
+}
+
+query {
+  : {id: 5, nom: "saucissonn", prix: 1.20}
+}
+
+headers {
+  Content-Type: application/json
+}

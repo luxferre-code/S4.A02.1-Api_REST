@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -112,12 +113,8 @@ public class IngredientREST extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        StringBuilder data = new StringBuilder();
-        BufferedReader reader = req.getReader();
-        String line;
-        while ((line = reader.readLine()) != null) { data.append(line); }
-        reader.close();
-        String json = data.toString();
+        String json = new BufferedReader(new InputStreamReader(req.getInputStream())).readLine();
+        System.out.println(json);
         if(json == null || json.isBlank()) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JSON");
             return;
