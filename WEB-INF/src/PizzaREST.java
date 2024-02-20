@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import fr.valentinthuillier.sae.dao.ComposeDaoSQL;
 import fr.valentinthuillier.sae.dao.IDao;
 import fr.valentinthuillier.sae.dao.IngredientDaoSQL;
 import fr.valentinthuillier.sae.dao.PizzaDaoSQL;
@@ -124,6 +125,79 @@ public class PizzaREST extends HttpServlet {
         } catch (Exception e) {
             resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
         }
+    }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String info = req.getPathInfo();
+        if(info == null) { info = ""; }
+        String[] parts = info.split("/");
+
+        if(parts[0].isEmpty()) {
+            String[] newParts = new String[parts.length-1];
+            for(int i = 1; i < parts.length; i++) { newParts[i-1] = parts[i]; }
+            parts = newParts;
+        }
+        
+        IDao<Pizza> dao = new PizzaDaoSQL();
+        Pizza pizza = null;
+        int id = -1;
+
+        switch (parts.length) {
+            case 1:
+                id = IngredientREST.parseInt(parts[0]);
+                if(id == -1) {
+                    resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid id");
+                    return;
+                }
+                pizza = dao.findById(id);
+                if(pizza == null) {
+                    resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Pizza not found");
+                    return;
+                }
+                if(!dao.remove(pizza)) {
+                    resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error while deleting pizza");
+                    return;
+                } else {
+                    resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                }
+                break;
+            case 2:
+                id = IngredientREST.parseInt(parts[0]);
+                if(id == -1) {
+                    resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid id");
+                    return;
+                }
+                pizza = dao.findById(id);
+                if(pizza == null) {
+                    resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Pizza not found");
+                    return;
+                }
+                IDao<Ingredient> ingredientDao = new IngredientDaoSQL();
+                Ingredient ingredient = null;
+                int idIngredient = IngredientREST.parseInt(parts[1]);
+                if(idIngredient == -1) {
+                    resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid id");
+                    return;
+                }
+                ingredient = ingredientDao.findById(idIngredient);
+                if(ingredient == null) {
+                    resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Ingredient not found");
+                    return;
+                }
+                ComposeDaoSQL composeDao = new ComposeDaoSQL();
+                if(!composeDao.removeSpecifique(id, idIngredient)) {
+                    resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Ingredient not found in pizza");
+                    return;
+                } else {
+                    resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+                }
+                break;
+            default:
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid path info");
+                return;
+        }
+
     }
 
 }

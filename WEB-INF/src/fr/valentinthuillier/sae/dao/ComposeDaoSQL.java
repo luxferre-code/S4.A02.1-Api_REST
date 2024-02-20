@@ -43,6 +43,19 @@ public class ComposeDaoSQL implements IDao<Compose> {
         return compose;
     }
 
+    public boolean removeSpecifique(int pizza, int ingredient) {
+        try(Connection con = DS.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("DELETE FROM compose WHERE pizza = ? AND ingredient = ?");
+            ps.setInt(1, pizza);
+            ps.setInt(2, ingredient);
+            ps.executeUpdate();
+            return ps.getUpdateCount() > 0;
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
     @Override
     public Compose[] findAll() {
         // TODO Auto-generated method stub
