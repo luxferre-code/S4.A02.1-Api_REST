@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -31,7 +30,6 @@ public class IngredientREST extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String info = req.getPathInfo();
         if(info == null) { info = ""; }
-        System.out.println(info);
         String[] parts = info.split("/");
 
         if(parts[0].isEmpty()) {
@@ -39,6 +37,7 @@ public class IngredientREST extends HttpServlet {
             for(int i = 1; i < parts.length; i++) { newParts[i-1] = parts[i]; }
             parts = newParts;
         }
+        // Affiche ou est ce que le fichier est executé
 
         IDao<Ingredient> dao = new IngredientDaoSQL();
         ObjectMapper objectMapper = new ObjectMapper();

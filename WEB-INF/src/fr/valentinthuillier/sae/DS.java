@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public class DS {
     
-    private static final String FILE_PATH = "/home/infoetu/valentin.thuillier.etu/tomcat/webapps/tp07/WEB-INF/res/config.prop";
+    private static final String FILE_PATH = "/home/infoetu/valentin.thuillier.etu/config.prop";
 
     private final String nom;
     private final String mdp;
