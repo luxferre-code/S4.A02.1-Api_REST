@@ -13,13 +13,13 @@ public class Pizza {
     private String nom;
     private Ingredient pate;
     private double prix;
-    private Ingredient[] ingredients;
+    private Compose ingredients;
 
     public Pizza() {
         // Do nothing
     }
 
-    public Pizza(int id, String nom, Ingredient pate, double prix, Ingredient[] ingredients) {
+    public Pizza(int id, String nom, Ingredient pate, double prix, Compose ingredients) {
         this.id = id;
         this.nom = nom;
         this.pate = pate;
@@ -59,11 +59,11 @@ public class Pizza {
         this.prix = prix;
     }
 
-    public Ingredient[] getIngredients() {
+    public Compose getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(Ingredient[] ingredients) {
+    public void setIngredients(Compose ingredients) {
         this.ingredients = ingredients;
     }
 
@@ -77,7 +77,7 @@ public class Pizza {
         long temp;
         temp = Double.doubleToLongBits(prix);
         result = prime * result + (int) (temp ^ (temp >>> 32));
-        result = prime * result + Arrays.hashCode(ingredients);
+        result = prime * result + ingredients.hashCode();
         return result;
     }
 
@@ -104,7 +104,7 @@ public class Pizza {
             return false;
         if (Double.doubleToLongBits(prix) != Double.doubleToLongBits(other.prix))
             return false;
-        if (!Arrays.equals(ingredients, other.ingredients))
+        if (!ingredients.equals(other.ingredients))
             return false;
         return true;
     }
@@ -112,7 +112,7 @@ public class Pizza {
     @Override
     public String toString() {
         return "Pizza [id=" + id + ", nom=" + nom + ", pate=" + pate + ", prix=" + prix + ", ingredients="
-                + Arrays.toString(ingredients) + "]";
+                + ingredients + "]";
     }
     
 }
