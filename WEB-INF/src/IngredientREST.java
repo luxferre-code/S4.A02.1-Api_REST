@@ -1,3 +1,4 @@
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -58,7 +59,11 @@ public class IngredientREST extends HttpServlet {
                 }
                 break;
             case 1:
-                id = parseInt(parts[0], resp);
+                id = parseInt(parts[0]);
+                if(id == -1) {
+                    resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid path info");
+                    return;
+                }
                 ingredient = dao.findById(id);
                 if(ingredient == null) {
                     resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Ingredient not found");
@@ -68,7 +73,11 @@ public class IngredientREST extends HttpServlet {
                 }
                 break;
             case 2:
-                id = parseInt(parts[0], resp);
+                id = parseInt(parts[0]);
+                if(id == -1) {
+                    resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid path info");
+                    return;
+                }
                 ingredient = dao.findById(id);
                 if(ingredient == null) {
                     resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Ingredient not found");
@@ -77,7 +86,7 @@ public class IngredientREST extends HttpServlet {
                         case "name":
                             out.println(objectMapper.writeValueAsString(ingredient.getNom()));
                             break;
-                        case "prix":
+                        case "price":
                             out.println(objectMapper.writeValueAsString(ingredient.getPrix()));
                             break;
                         default:
@@ -93,19 +102,44 @@ public class IngredientREST extends HttpServlet {
 
     }
 
-    private int parseInt(String string, HttpServletResponse resp) throws IOException {
+    private int parseInt(String string) throws IOException {
         try {
             return Integer.parseInt(string);
         } catch (NumberFormatException e) {
-            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid id type, please give a number");
             return -1;
         }
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO Auto-generated method stub
-        super.doPost(req, resp);
+        StringBuilder data = new StringBuilder();
+        BufferedReader reader = req.getReader();
+        String line;
+        while ((line = reader.readLine()) != null) { data.append(line); }
+        reader.close();
+        String json = data.toString();
+        if(json == null || json.isBlank()) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JSON");
+            return;
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        Ingredient ingredient = null;
+        try {
+            ingredient = objectMapper.readValue(json, Ingredient.class);
+        } catch(Exception e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JSON");
+            return;
+        }
+        IDao<Ingredient> dao = new IngredientDaoSQL();
+        try {
+            if(!dao.save(ingredient)) {
+                resp.sendError(HttpServletResponse.SC_CONFLICT, "Ingredient already exists");
+                return;
+            }
+            resp.setStatus(HttpServletResponse.SC_CREATED);
+        } catch (Exception e) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage());
+        }
     }
 
     @Override
