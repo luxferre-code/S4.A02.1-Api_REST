@@ -46,6 +46,9 @@ public class IngredientREST extends HttpServlet {
         resp.setContentType("application/json;charset=UTF-8");
         PrintWriter out = resp.getWriter();
 
+        int id = -1;
+        Ingredient ingredient = null;
+
         switch (parts.length) {
             case 0:
                 try {
@@ -56,8 +59,8 @@ public class IngredientREST extends HttpServlet {
                 }
                 break;
             case 1:
-                int id = parseInt(parts[0], resp);
-                Ingredient ingredient = dao.findById(id);
+                id = parseInt(parts[0], resp);
+                ingredient = dao.findById(id);
                 if(ingredient == null) {
                     resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Ingredient not found");
                 } else {
@@ -66,7 +69,23 @@ public class IngredientREST extends HttpServlet {
                 }
                 break;
             case 2:
-                //TODO: cas GET /ingredients/{id}/name
+                id = parseInt(parts[0], resp);
+                ingredient = dao.findById(id);
+                if(ingredient == null) {
+                    resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Ingredient not found");
+                } else {
+                    switch (parts[1].toLowerCase()) {
+                        case "name":
+                            out.println(objectMapper.writeValueAsString(ingredient.getNom()));
+                            break;
+                        case "prix":
+                            out.println(objectMapper.writeValueAsString(ingredient.getPrix()));
+                            break;
+                        default:
+                            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid path info");
+                            break;
+                    }
+                }
                 break;
             default:
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid path info");
