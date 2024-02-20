@@ -141,8 +141,43 @@ public class IngredientREST extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO Auto-generated method stub
-        super.doDelete(req, resp);
+        String info = req.getPathInfo();
+        if(info == null) { info = ""; }
+        String[] parts = info.split("/");
+
+        if(parts[0].isEmpty()) {
+            String[] newParts = new String[parts.length-1];
+            for(int i = 1; i < parts.length; i++) { newParts[i-1] = parts[i]; }
+            parts = newParts;
+        }
+        
+        ObjectMapper objectMapper = new ObjectMapper();
+        IDao<Ingredient> dao = new IngredientDaoSQL();
+        Ingredient ingredient = null;
+
+        if(parts.length != 1) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid path info");
+            return;
+        }
+
+        int id = parseInt(parts[0]);
+        if(id == -1) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid path info");
+            return;
+        }
+
+        ingredient = dao.findById(id);
+        if(ingredient == null) {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Ingredient not found");
+            return;
+        }
+
+        if(!dao.remove(ingredient)) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error while deleting ingredient");
+        } else {
+            resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        }
+
     }
 
 }
