@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
  * @see Ingredient
  * @see IngredientDaoSQL
  */
-@WebServlet("/ingredient/*")
+@WebServlet("/ingredients/*")
 public class IngredientREST extends HttpServlet {
     
     /**
@@ -103,7 +103,7 @@ public class IngredientREST extends HttpServlet {
 
     }
 
-    private int parseInt(String string) throws IOException {
+    static int parseInt(String string) throws IOException {
         try {
             return Integer.parseInt(string);
         } catch (NumberFormatException e) {
