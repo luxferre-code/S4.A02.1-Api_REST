@@ -1,13 +1,29 @@
 package fr.valentinthuillier.sae.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import fr.valentinthuillier.sae.DS;
 import fr.valentinthuillier.sae.dto.Pizza;
 
+/**
+ * PizzaDaoSQL Class - Cette classe permet de manipuler les objets de type Pizza dans la base de données.
+ * @see IDao
+ * @see Pizza
+ * @see IngredientDaoSQL
+ * @see ComposeDaoSQL
+ * @see Ingredient
+ * @see Compose
+ * @see DS
+ * @author Valentin THUILLIER
+ */
 public class PizzaDaoSQL implements IDao<Pizza> {
 
     private static final IngredientDaoSQL ingredientDao = new IngredientDaoSQL();
+    private static final ComposeDaoSQL composeDao = new ComposeDaoSQL();
 
     public PizzaDaoSQL() {
         // Do nothing
@@ -18,7 +34,12 @@ public class PizzaDaoSQL implements IDao<Pizza> {
         Pizza pizza = null;
         try(Connection con = DS.getConnection()) {
 
-            
+            PreparedStatement ps = con.prepareStatement("SELECT nom, pate, prixBase FROM pizza WHERE id = ?");
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next())
+                pizza = new Pizza(id, rs.getString("nom"), ingredientDao.findById(rs.getInt("pate")), rs.getDouble("prixBase"), composeDao.findById(id));
+            ps.close();
 
         } catch(Exception e) {
             System.out.println(e.getMessage());
@@ -28,14 +49,35 @@ public class PizzaDaoSQL implements IDao<Pizza> {
 
     @Override
     public Pizza[] findAll() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
+        List<Pizza> pizzas = new ArrayList<>();
+        try(Connection con = DS.getConnection()) {
+
+            PreparedStatement ps = con.prepareStatement("SELECT id, nom, pate, prixBase FROM pizza");
+            ResultSet rs = ps.executeQuery();
+            while(rs.next())
+                pizzas.add(new Pizza(rs.getInt("id"), rs.getString("nom"), ingredientDao.findById(rs.getInt("pate")), rs.getDouble("prixBase"), composeDao.findById(rs.getInt("id"))));
+            ps.close();
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return pizzas.toArray(new Pizza[0]);
     }
 
     @Override
     public boolean save(Pizza object) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'save'");
+        try(Connection con = DS.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("INSERT INTO pizza(id, nom, pate, prixBase) VALUES(?, ?, ?, ?)");
+            ps.setInt(1, object.getId());
+            ps.setString(2, object.getNom());
+            ps.setInt(3, object.getPate().getId());
+            ps.setDouble(4, object.getPrix());
+            ps.executeUpdate();
+            ps.close();
+            return composeDao.save(object.getIngredients());
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     @Override
@@ -46,8 +88,15 @@ public class PizzaDaoSQL implements IDao<Pizza> {
 
     @Override
     public boolean remove(Pizza object) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'remove'");
+        try(Connection con = DS.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("DELETE FROM pizza WHERE id = ?");
+            ps.setInt(1, object.getId());
+            ps.executeUpdate();
+            return true;
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
 

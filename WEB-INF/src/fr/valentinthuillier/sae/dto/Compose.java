@@ -2,6 +2,12 @@ package fr.valentinthuillier.sae.dto;
 
 import java.util.Arrays;
 
+/**
+ * Compose Class - Cette classe permet de manipuler les objets de type Compose.
+ * @see Ingredient
+ * @see Pizza
+ * @author Valentin THUILLIER
+ */
 public class Compose {
 
     private int id_pizza;

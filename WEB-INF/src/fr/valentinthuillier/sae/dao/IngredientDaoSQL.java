@@ -11,6 +11,10 @@ import fr.valentinthuillier.sae.dto.Ingredient;
 
 /**
  * IngredientDao Class - Cette classe permet de manipuler les objets de type Ingredient dans la base de données.
+ * @see IDao
+ * @see Ingredient
+ * @see DS
+ * @author Valentin THUILLIER
  */
 public class IngredientDaoSQL implements IDao<Ingredient> {
     

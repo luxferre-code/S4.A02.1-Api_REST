@@ -10,6 +10,15 @@ import fr.valentinthuillier.sae.DS;
 import fr.valentinthuillier.sae.dto.Compose;
 import fr.valentinthuillier.sae.dto.Ingredient;
 
+/**
+ * ComposeDaoSQL Class - Cette classe permet de manipuler les objets de type Compose dans la base de données.
+ * @see IDao
+ * @see Compose
+ * @see Ingredient
+ * @see DS
+ * @see IngredientDaoSQL
+ * @author Valentin THUILLIER
+ */
 public class ComposeDaoSQL implements IDao<Compose> {
 
     private static final IngredientDaoSQL ingredientDao = new IngredientDaoSQL();
