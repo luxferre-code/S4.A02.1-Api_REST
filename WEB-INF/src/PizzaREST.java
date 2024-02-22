@@ -79,12 +79,7 @@ public class PizzaREST extends HttpServlet {
                         out.println(mapper.writeValueAsString(pizza.getPate()));
                         break;
                     case "prixfinal":
-                        double prix = pizza.getPrix();
-                        for(Ingredient i : pizza.getIngredients().getIngredients()) {
-                            prix += i.getPrix();
-                        }
-                        prix += pizza.getPate().getPrix();
-                        out.println(mapper.writeValueAsString(prix));
+                        out.println(mapper.writeValueAsString(pizza.prixFinal()));
                         break;
                     case "ingredients":
                         out.println(mapper.writeValueAsString(pizza.getIngredients()));

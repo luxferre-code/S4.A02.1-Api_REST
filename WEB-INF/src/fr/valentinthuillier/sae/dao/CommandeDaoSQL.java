@@ -27,8 +27,10 @@ public class CommandeDaoSQL implements IDao<Commande> {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            System.out.println("Erreur ici !");
+            e.printStackTrace();
         }
-
+        System.out.println(commande);
         return commande;
     }
 
@@ -41,7 +43,9 @@ public class CommandeDaoSQL implements IDao<Commande> {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                commandes.add(findById(rs.getInt("id")));
+                Commande cmd = findById(rs.getInt("id"));
+                System.out.println(cmd);
+                commandes.add(cmd);
             }
 
         } catch (Exception e) {
@@ -56,8 +60,8 @@ public class CommandeDaoSQL implements IDao<Commande> {
             PreparedStatement ps = con.prepareStatement("INSERT INTO commande (id, nom, date) VALUES (?, ?, ?)");
             ps.setInt(1, object.getId());
             ps.setString(2, object.getNom());
-            ps.setDate(3, Date.valueOf(object.getDate()));
-            return ps.executeUpdate() == 1;
+            ps.setDate(3, Date.valueOf(object.getDate().toString()));
+            return ps.executeUpdate() == 1 && new CommandePizzaDaoSQL().save(object.getPizzas());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;
@@ -70,7 +74,7 @@ public class CommandeDaoSQL implements IDao<Commande> {
             
             PreparedStatement ps = con.prepareStatement("UPDATE commande SET nom = ?, date = ? WHERE id = ?");
             ps.setString(1, object.getNom());
-            ps.setDate(2, Date.valueOf(object.getDate()));
+            ps.setDate(2, Date.valueOf(object.getDate().toString()));
             ps.setInt(3, object.getId());
             return ps.executeUpdate() == 1;
 

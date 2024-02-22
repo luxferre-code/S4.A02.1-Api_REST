@@ -1,0 +1,15 @@
+meta {
+  name: Add a second command
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:8080/sae/commandes
+  body: json
+  auth: none
+}
+
+body:json {
+  {"id":2,"nom":"Commande 2","pizzas":{"id_commande":1,"pizzas":[{"id":1,"nom":"Margherita","pate":{"id":4,"nom":"pate a pizza","prix":0.5},"prix":40.0,"ingredients":{"id_pizza":1,"ingredients":[{"id":1,"nom":"tomate","prix":1.5},{"id":2,"nom":"mozzarella","prix":2.0}]}},{"id":1,"nom":"Margherita","pate":{"id":4,"nom":"pate a pizza","prix":0.5},"prix":40.0,"ingredients":{"id_pizza":1,"ingredients":[{"id":1,"nom":"tomate","prix":1.5},{"id":2,"nom":"mozzarella","prix":2.0}]}},{"id":1,"nom":"Margherita","pate":{"id":4,"nom":"pate a pizza","prix":0.5},"prix":40.0,"ingredients":{"id_pizza":1,"ingredients":[{"id":1,"nom":"tomate","prix":1.5},{"id":2,"nom":"mozzarella","prix":2.0}]}}]},"date":"2024-02-22"}
+}

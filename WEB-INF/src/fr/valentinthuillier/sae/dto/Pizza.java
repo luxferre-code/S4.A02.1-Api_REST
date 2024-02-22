@@ -54,6 +54,14 @@ public class Pizza {
         return prix;
     }
 
+    public double prixFinal() {
+        double prix = 0;
+        for(Ingredient ingredient : ingredients.getIngredients()) {
+            prix += ingredient.getPrix();
+        }
+        return prix + this.prix + this.pate.getPrix();
+    }
+
     public void setPrix(double prix) {
         this.prix = prix;
     }

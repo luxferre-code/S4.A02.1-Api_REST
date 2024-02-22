@@ -56,11 +56,19 @@ CREATE TABLE commande
     CONSTRAINT commande_pk PRIMARY KEY (id)
 );
 
+INSERT INTO commande(nom) VALUES ('Commande 1');
+
 CREATE TABLE commande_pizza
 (
     commande INT,
     pizza    INT,
-    CONSTRAINT commande_pizza_pk PRIMARY KEY (commande, pizza),
     CONSTRAINT commande_pizza_commande_fk FOREIGN KEY (commande) REFERENCES commande (id) ON DELETE CASCADE,
     CONSTRAINT commande_pizza_pizza_fk FOREIGN KEY (pizza) REFERENCES pizza (id) ON DELETE CASCADE
 );
+
+INSERT INTO commande_pizza(commande, pizza)
+VALUES (1, 1);
+INSERT INTO commande_pizza(commande, pizza)
+VALUES (1, 1);
+INSERT INTO commande_pizza(commande, pizza)
+VALUES (1, 1);

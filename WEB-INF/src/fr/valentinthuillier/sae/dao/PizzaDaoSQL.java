@@ -38,13 +38,15 @@ public class PizzaDaoSQL implements IDao<Pizza> {
             PreparedStatement ps = con.prepareStatement("SELECT nom, pate, prixBase FROM pizza WHERE id = ?");
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            if(rs.next())
+            if(rs.next()) {
                 pizza = new Pizza(id, rs.getString("nom"), ingredientDao.findById(rs.getInt("pate")), rs.getDouble("prixBase"), composeDao.findById(id));
+            }
             ps.close();
 
         } catch(Exception e) {
             System.out.println(e.getMessage());
         }
+        System.out.println("id : " + id + " pizza : " + pizza);
         return pizza;
     }
 

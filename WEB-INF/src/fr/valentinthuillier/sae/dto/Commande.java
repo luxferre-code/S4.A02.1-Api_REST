@@ -1,6 +1,7 @@
 package fr.valentinthuillier.sae.dto;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Commande {
     
@@ -8,6 +9,10 @@ public class Commande {
     private String nom;
     private CommandePizza pizzas;
     private LocalDate date;
+
+    public Commande() {
+        
+    }
 
     public Commande(int id, String nom, CommandePizza pizzas, LocalDate date) {
         this.id = id;
@@ -52,6 +57,14 @@ public class Commande {
         return "Commande [id=" + id + ", nom=" + nom + ", pizzas=" + pizzas + " date=" + date + "]";
     }
 
+    public double prixFinal() {
+        double prix = 0;
+        for(Pizza pizza : pizzas.getPizzas()) {
+            prix += pizza.getPrix();
+        }
+        return prix;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -90,6 +103,10 @@ public class Commande {
         } else if (!date.equals(other.date))
             return false;
         return true;
+    }
+
+    public int quantite() {
+        return pizzas.getPizzas().length;
     }
 
     

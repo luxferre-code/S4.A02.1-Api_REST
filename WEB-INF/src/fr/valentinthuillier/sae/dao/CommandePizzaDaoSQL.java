@@ -33,6 +33,7 @@ public class CommandePizzaDaoSQL implements IDao<CommandePizza> {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+        System.out.println(commandePizza + " id : " + id);
         return commandePizza;
     }
 
@@ -57,10 +58,13 @@ public class CommandePizzaDaoSQL implements IDao<CommandePizza> {
     @Override
     public boolean save(CommandePizza object) {
         try (Connection con = DS.getConnection()) {
+            PizzaDaoSQL pizzaDao = new PizzaDaoSQL();
             PreparedStatement ps = con.prepareStatement("INSERT INTO commande_pizza (commande, pizza) VALUES (?, ?)");
             for (Pizza pizza : object.getPizzas()) {
                 ps.setInt(1, object.getId_commande());
                 ps.setInt(2, pizza.getId());
+                try { pizzaDao.save(pizza); }
+                catch (Exception e) { }
                 ps.addBatch();
             }
             return ps.executeBatch().length > 0;

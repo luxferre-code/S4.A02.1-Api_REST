@@ -7,6 +7,10 @@ public class CommandePizza {
     private int id_commande;
     private Pizza[] pizzas;
 
+    public CommandePizza() {
+        // Do nothing
+    }
+
     public CommandePizza(int id_commande, Pizza[] pizzas) {
         this.id_commande = id_commande;
         this.pizzas = pizzas;
