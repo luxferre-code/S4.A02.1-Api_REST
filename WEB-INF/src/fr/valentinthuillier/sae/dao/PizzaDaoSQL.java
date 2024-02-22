@@ -76,7 +76,9 @@ public class PizzaDaoSQL implements IDao<Pizza> {
             ps.setDouble(4, object.getPrix());
             ps.executeUpdate();
             ps.close();
-            return composeDao.save(object.getIngredients());
+            try { composeDao.save(object.getIngredients()); }
+            catch(Exception e) { }
+            return true;
         } catch(Exception e) {
             System.out.println(e.getMessage());
             return false;

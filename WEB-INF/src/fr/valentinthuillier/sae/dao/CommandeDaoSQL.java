@@ -44,7 +44,6 @@ public class CommandeDaoSQL implements IDao<Commande> {
 
             while (rs.next()) {
                 Commande cmd = findById(rs.getInt("id"));
-                System.out.println(cmd);
                 commandes.add(cmd);
             }
 

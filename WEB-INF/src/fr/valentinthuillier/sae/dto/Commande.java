@@ -2,6 +2,7 @@ package fr.valentinthuillier.sae.dto;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 public class Commande {
     
@@ -54,7 +55,7 @@ public class Commande {
     }
 
     public String toString() {
-        return "Commande [id=" + id + ", nom=" + nom + ", pizzas=" + pizzas + " date=" + date + "]";
+        return "Commande [id=" + id + ", nom=" + nom + ", pizzas=" + List.of(pizzas).toString() + " date=" + date + "]";
     }
 
     public double prixFinal() {

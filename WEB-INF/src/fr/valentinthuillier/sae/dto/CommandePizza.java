@@ -1,6 +1,7 @@
 package fr.valentinthuillier.sae.dto;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class CommandePizza {
 
@@ -33,7 +34,7 @@ public class CommandePizza {
     }
 
     public String toString() {
-        return "CommandePizza [id_commande=" + id_commande + ", pizzas=" + pizzas + "]";
+        return "CommandePizza [id_commande=" + id_commande + ", pizzas=" + List.of(pizzas) + "]";
     }
 
     @Override

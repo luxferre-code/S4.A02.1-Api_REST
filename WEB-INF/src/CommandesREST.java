@@ -28,7 +28,7 @@ public class CommandesREST extends HttpServlet {
         }
         String[] parts = info.split("/");
 
-        if(parts[0].isEmpty()) {
+        if(parts.length > 0 && parts[0].isEmpty()) {
             String[] newParts = new String[parts.length - 1];
             System.arraycopy(parts, 1, newParts, 0, parts.length - 1);
             parts = newParts;
@@ -107,7 +107,7 @@ public class CommandesREST extends HttpServlet {
         }
         String[] parts = info.split("/");
 
-        if(parts[0].isEmpty()) {
+        if(parts.length > 0 && parts[0].isEmpty()) {
             String[] newParts = new String[parts.length - 1];
             System.arraycopy(parts, 1, newParts, 0, parts.length - 1);
             parts = newParts;
@@ -128,7 +128,9 @@ public class CommandesREST extends HttpServlet {
         switch (parts.length) {
             case 0:
                 commande = objectMapper.readValue(json, Commande.class);
+                System.out.println(commande);
                 dao.save(commande);
+                System.out.println(objectMapper.writeValueAsString(commande));
                 resp.setStatus(HttpServletResponse.SC_CREATED);
                 break;
             default:

@@ -44,7 +44,7 @@ public class IngredientREST extends HttpServlet {
         }
         String[] parts = info.split("/");
 
-        if(parts[0].isEmpty()) {
+        if(parts.length > 0 && parts[0].isEmpty()) {
             String[] newParts = new String[parts.length - 1];
             System.arraycopy(parts, 1, newParts, 0, parts.length - 1);
             parts = newParts;
@@ -148,7 +148,7 @@ public class IngredientREST extends HttpServlet {
         }
         String[] parts = info.split("/");
 
-        if(parts[0].isEmpty()) {
+        if(parts.length > 0 && parts[0].isEmpty()) {
             String[] newParts = new String[parts.length - 1];
             System.arraycopy(parts, 1, newParts, 0, parts.length - 1);
             parts = newParts;
