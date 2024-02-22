@@ -1,6 +1,8 @@
 DROP TABLE IF EXISTS ingredient CASCADE;
 DROP TABLE IF EXISTS pizza CASCADE;
 DROP TABLE IF EXISTS compose CASCADE;
+DROP TABLE IF EXISTS commande CASCADE;
+DROP TABLE IF EXISTS commande_pizza CASCADE;
 
 CREATE TABLE ingredient
 (
@@ -45,3 +47,20 @@ INSERT INTO compose(pizza, ingredient)
 VALUES (1, 1);
 INSERT INTO compose(pizza, ingredient)
 VALUES (1, 2);
+
+CREATE TABLE commande
+(
+    id       SERIAL,
+    nom      TEXT,
+    date    DATE DEFAULT CURRENT_DATE,
+    CONSTRAINT commande_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE commande_pizza
+(
+    commande INT,
+    pizza    INT,
+    CONSTRAINT commande_pizza_pk PRIMARY KEY (commande, pizza),
+    CONSTRAINT commande_pizza_commande_fk FOREIGN KEY (commande) REFERENCES commande (id) ON DELETE CASCADE,
+    CONSTRAINT commande_pizza_pizza_fk FOREIGN KEY (pizza) REFERENCES pizza (id) ON DELETE CASCADE
+);

@@ -1,0 +1,15 @@
+meta {
+  name: Set at the 1st pizza price to 40
+  type: http
+  seq: 8
+}
+
+patch {
+  url: http://localhost:8080/sae/pizzas/1
+  body: json
+  auth: none
+}
+
+body:json {
+  { "prix": 40 }
+}

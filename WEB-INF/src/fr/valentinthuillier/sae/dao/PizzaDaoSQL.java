@@ -83,8 +83,18 @@ public class PizzaDaoSQL implements IDao<Pizza> {
 
     @Override
     public boolean update(Pizza object) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        try(Connection con = DS.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("UPDATE pizza SET nom = ?, pate = ?, prixBase = ? WHERE id = ?");
+            ps.setString(1, object.getNom());
+            ps.setInt(2, object.getPate().getId());
+            ps.setDouble(3, object.getPrix());
+            ps.setInt(4, object.getId());
+            ps.executeUpdate();
+            return composeDao.update(object.getIngredients());
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     @Override

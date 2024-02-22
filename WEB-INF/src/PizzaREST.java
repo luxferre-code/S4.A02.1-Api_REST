@@ -45,9 +45,6 @@ public class PizzaREST extends HttpServlet {
         switch(parts.length) {
             case 0:
                 Pizza[] pizzas = pizzaDao.findAll();
-                if(pizzaDao == null) {
-                    pizzas = new Pizza[0];
-                }
                 out.println(mapper.writeValueAsString(pizzas));
                 break;
             case 1:
@@ -105,6 +102,7 @@ public class PizzaREST extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        @SuppressWarnings("resource")
         String json = new BufferedReader(new InputStreamReader(req.getInputStream())).readLine();
         System.out.println(json);
         if(json == null || json.isBlank()) {
@@ -255,6 +253,74 @@ public class PizzaREST extends HttpServlet {
                 resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid path info");
         }
 
+    }
+
+    protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //PATCH /pizzas/{id} modif d’un attribut d’une pizza (le prix augmente)
+        String info = req.getPathInfo();
+        if(info == null) {
+            info = "";
+        }
+        String[] parts = info.split("/");
+
+        if(parts[0].isEmpty()) {
+            String[] newParts = new String[parts.length - 1];
+            System.arraycopy(parts, 1, newParts, 0, parts.length - 1);
+            parts = newParts;
+        }
+
+        IDao<Pizza> dao = new PizzaDaoSQL();
+        Pizza pizza = null;
+        int id = -1;
+        if(parts.length != 1) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid path info");
+            return;
+        }
+        id = IngredientREST.parseInt(parts[0]);
+        if(id == -1) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid id");
+            return;
+        }
+        pizza = dao.findById(id);
+        if(pizza == null) {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Pizza not found");
+            return;
+        }
+        // Recuperation du json pour faire les modifications
+        @SuppressWarnings("resource")
+        String json = new BufferedReader(new InputStreamReader(req.getInputStream())).readLine();
+        if(json == null || json.isBlank()) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JSON");
+            return;
+        }
+        ObjectMapper objectMapper = new ObjectMapper();
+        Pizza newPizza = null;
+        try {
+            newPizza = objectMapper.readValue(json, Pizza.class);
+        } catch(Exception e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JSON");
+            return;
+        }
+        newPizza.setId(pizza.getId());
+        if(newPizza.getNom() == null) newPizza.setNom(pizza.getNom());
+        if(newPizza.getPate() == null) newPizza.setPate(pizza.getPate());
+        if(newPizza.getIngredients() == null) newPizza.setIngredients(pizza.getIngredients());
+        if(newPizza.getPrix() == 0) newPizza.setPrix(pizza.getPrix());
+        if(!dao.update(newPizza)) {
+            resp.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error while updating pizza");
+            return;
+        } else {
+            resp.setStatus(HttpServletResponse.SC_NO_CONTENT);
+        }
+    }
+
+    @Override
+    protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(req.getMethod().equals("PATCH")) {
+            doPatch(req, resp);
+        } else {
+            super.service(req, resp);
+        }
     }
 
 }

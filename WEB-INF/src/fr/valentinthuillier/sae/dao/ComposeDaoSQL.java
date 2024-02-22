@@ -82,8 +82,15 @@ public class ComposeDaoSQL implements IDao<Compose> {
 
     @Override
     public boolean update(Compose object) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        try(Connection con = DS.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("DELETE FROM compose WHERE pizza = ?");
+            ps.setInt(1, object.getId_pizza());
+            ps.executeUpdate();
+            return save(object);
+        } catch(Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     @Override
