@@ -23,7 +23,7 @@ import java.io.PrintWriter;
 @WebServlet("/ingredients/*")
 public class IngredientREST extends HttpServlet {
 
-    static int parseInt(String string) throws IOException {
+    static int parseInt(String string) {
         try {
             return Integer.parseInt(string);
         } catch(NumberFormatException e) {
@@ -54,7 +54,6 @@ public class IngredientREST extends HttpServlet {
         IDao<Ingredient> dao = new IngredientDaoSQL();
         ObjectMapper objectMapper = new ObjectMapper();
 
-        resp.setContentType("application/json;charset=UTF-8");
         PrintWriter out = resp.getWriter();
 
         int id = -1;
@@ -63,6 +62,7 @@ public class IngredientREST extends HttpServlet {
         switch(parts.length) {
             case 0:
                 try {
+                    resp.setContentType("application/json;charset=UTF-8");
                     String jsonstring = objectMapper.writeValueAsString(dao.findAll());
                     out.println(jsonstring);
                 } catch(Exception e) {
@@ -79,6 +79,7 @@ public class IngredientREST extends HttpServlet {
                 if(ingredient == null) {
                     resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Ingredient not found");
                 } else {
+                    resp.setContentType("application/json;charset=UTF-8");
                     String json = objectMapper.writeValueAsString(ingredient);
                     out.println(json);
                 }
@@ -93,6 +94,7 @@ public class IngredientREST extends HttpServlet {
                 if(ingredient == null) {
                     resp.sendError(HttpServletResponse.SC_NOT_FOUND, "Ingredient not found");
                 } else {
+                    resp.setContentType("text/plain;charset=UTF-8");
                     switch(parts[1].toLowerCase()) {
                         case "name":
                             out.println(objectMapper.writeValueAsString(ingredient.getNom()));
@@ -114,9 +116,14 @@ public class IngredientREST extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String json = new BufferedReader(new InputStreamReader(req.getInputStream())).readLine();
-        System.out.println(json);
-        if(json == null || json.isBlank()) {
+        String json = null;
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()))) {
+            json = reader.readLine();
+        } catch (IOException e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JSON");
+            return;
+        }
+        if (json == null || json.isBlank()) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JSON");
             return;
         }
@@ -124,7 +131,7 @@ public class IngredientREST extends HttpServlet {
         Ingredient ingredient = null;
         try {
             ingredient = objectMapper.readValue(json, Ingredient.class);
-        } catch(Exception e) {
+        } catch (Exception e) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JSON");
             return;
         }
@@ -154,7 +161,6 @@ public class IngredientREST extends HttpServlet {
             parts = newParts;
         }
 
-        ObjectMapper objectMapper = new ObjectMapper();
         IDao<Ingredient> dao = new IngredientDaoSQL();
         Ingredient ingredient = null;
 

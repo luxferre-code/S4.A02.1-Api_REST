@@ -2,7 +2,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -48,8 +47,6 @@ public class CommandesREST extends HttpServlet {
             case 0:
                 // Renvoie la liste des commandes en JSON
                 Commande[] commandes = dao.findAll();
-                System.out.println(List.of(commandes));
-                System.out.println(commandes[0].getDate());
                 out.println(objectMapper.writeValueAsString(commandes));
                 break;
             
@@ -120,22 +117,15 @@ public class CommandesREST extends HttpServlet {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-        int id = -1;
 
-        PrintWriter out = resp.getWriter();
         Commande commande = null;
 
-        switch (parts.length) {
-            case 0:
-                commande = objectMapper.readValue(json, Commande.class);
-                System.out.println(commande);
-                dao.save(commande);
-                System.out.println(objectMapper.writeValueAsString(commande));
-                resp.setStatus(HttpServletResponse.SC_CREATED);
-                break;
-            default:
-                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Mauvaise requête");
-                break;
+        if(parts.length == 0) {
+            commande = objectMapper.readValue(json, Commande.class);
+            dao.save(commande);
+            resp.setStatus(HttpServletResponse.SC_CREATED);
+        } else {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Mauvaise requête");
         }
 
     }
