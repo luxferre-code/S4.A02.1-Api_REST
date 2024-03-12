@@ -9,3 +9,20 @@ get {
   body: none
   auth: none
 }
+
+docs {
+  Cette requête GET renvoie la première pizza enregistré dans la base de données sous la forme d'un objet JSON. Cette objets est constitué de:
+  - Son id (un nombre entier)
+  - Son nom (un texte)
+  - Une pâte (un objet ingrédient) composé de
+    - Son id (un nombre entier)
+    - Son nom (un texte)
+    - Son prix (un nombre flottant)
+  - Son prix (un nombre flottant)
+  - Sa liste d'ingrédients représeter par
+    - L'id de la pizza (un nombre entier)
+    - Une liste d'ingrédients
+      - Leur id (un nombre entier)
+      - Leur nom (un texte)
+      - Leur prix (un nombre flottant)
+}

@@ -5,15 +5,21 @@ meta {
 }
 
 post {
-  url: http://localhost:8080/sae/pizzas/1
+  url: http://localhost:8080/sae/pizzas/1?token=a38eac3d-5f97-4175-b988-dfcdb59fb8b1
   body: json
   auth: none
 }
 
+query {
+  token: a38eac3d-5f97-4175-b988-dfcdb59fb8b1
+}
+
 body:json {
   {
-      "id": 1,
-      "nom": "tomate",
-      "prix": 1.5
+      "id": 1
   }
+}
+
+docs {
+  Cette requête POST permet d'ajouter à une pizza un ingrédient (qui doit être donné sous la forme d'un objet JSON) et qui doit contenir au minima son identifiant (attention, si il contient un nom qui n'est pas le même que présent dans la base de données, le code prendra quand même celui de la base de données !). Si l'ingrédient a bien été ajouté, le code renvoie le code 201 indiquant que celui ci a bien été créé. Sinon, elle renvoie le code 409 indiquant qu'un conflit existe.
 }

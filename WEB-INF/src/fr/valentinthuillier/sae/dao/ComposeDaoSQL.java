@@ -72,8 +72,7 @@ public class ComposeDaoSQL implements IDao<Compose> {
                 ps.setInt(2, ingredient.getId());
                 ps.addBatch();
             }
-            ps.executeBatch();
-            return true;
+            return ps.executeBatch().length == object.getIngredients().length;
         } catch(Exception e) {
             System.out.println(e.getMessage());
             return false;

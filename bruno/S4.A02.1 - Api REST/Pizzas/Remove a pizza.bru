@@ -5,7 +5,15 @@ meta {
 }
 
 delete {
-  url: http://localhost:8080/sae/pizzas/2
+  url: http://localhost:8080/sae/pizzas/2?token=a38eac3d-5f97-4175-b988-dfcdb59fb8b1
   body: none
   auth: none
+}
+
+query {
+  token: a38eac3d-5f97-4175-b988-dfcdb59fb8b1
+}
+
+docs {
+  Cette requête DELETE permet de supprimer de la base de données une pizza. L'url est composé de l'id de la pizza et de votre token. Si la pizza a bien été trouvé et supprimé, l'api renvoie alors le code 204 indiquant qu'il n'y a aucun objet (donc bien supprimé). Sinon, l'api renvoie le code 404 indiquant qu'elle n'a pas trouvé l'objet.
 }

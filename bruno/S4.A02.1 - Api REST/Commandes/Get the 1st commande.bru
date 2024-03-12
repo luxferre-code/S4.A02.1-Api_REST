@@ -1,0 +1,16 @@
+meta {
+  name: Get the 1st commande
+  type: http
+  seq: 3
+}
+
+get {
+  url: http://localhost:8080/sae/commandes/1
+  body: none
+  auth: none
+}
+
+docs {
+  Cette requête GET permet de récuperer sous la forme d'un objet JSON une commande dont l'identifiant est celui qui est dans l'url.
+  Si l'identifiant n'est pas inscrit dans la base de données, alors l'api renvoie le code 404 indiquant que l'objet n'a pas été trouvé.
+}

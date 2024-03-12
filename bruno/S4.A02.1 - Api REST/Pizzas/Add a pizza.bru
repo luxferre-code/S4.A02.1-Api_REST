@@ -5,9 +5,13 @@ meta {
 }
 
 post {
-  url: http://localhost:8080/sae/pizzas
+  url: http://localhost:8080/sae/pizzas?token=a38eac3d-5f97-4175-b988-dfcdb59fb8b1
   body: json
   auth: none
+}
+
+query {
+  token: a38eac3d-5f97-4175-b988-dfcdb59fb8b1
 }
 
 body:json {
@@ -31,4 +35,22 @@ body:json {
       ]
     }
   }
+}
+
+docs {
+  Cette requête POST permet d'ajouter un pizza dans la base de données. Elle demande comme paramètre une pizza au format JSON composé de:
+  - Son id (un nombre entier) - Pas obligatoire, si non présent, un identifiant unique est généré.
+  - Son nom (un texte)
+  - Une pâte (un objet ingrédient) composé de
+    - Son id (un nombre entier)
+    - Son nom (un texte)
+    - Son prix (un nombre flottant)
+  - Son prix (un nombre flottant)
+  - Sa liste d'ingrédients représeter par
+    - L'id de la pizza (un nombre entier)
+    - Une liste d'ingrédients
+      - Leur id (un nombre entier)
+      - Leur nom (un texte)
+      - Leur prix (un nombre flottant)
+  Si un ingrédient n'est pas présent dans la base de données ou si l'id est déjà existant dans la base de données, le code va renoyé une erreur 409 indiquant un conflit.
 }

@@ -1,0 +1,21 @@
+meta {
+  name: Get a user token
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:8080/sae/users/token?login=bruno&pwd=bruno
+  body: none
+  auth: none
+}
+
+query {
+  login: bruno
+  pwd: bruno
+}
+
+docs {
+  Cette requête GET prend en paramètre un login et un mot de passe, ces derniers devant etre dans la table users.
+  Elle renvoie, si l'utilisateur existe, un UUID permettant à ce dernier de pouvoir effectuer des modifications sur les tables de la base de données.
+}

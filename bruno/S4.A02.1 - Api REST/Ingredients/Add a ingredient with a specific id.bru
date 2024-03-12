@@ -1,0 +1,29 @@
+meta {
+  name: Add a ingredient with a specific id
+  type: http
+  seq: 7
+}
+
+post {
+  url: http://localhost:8080/sae/ingredients?token=a38eac3d-5f97-4175-b988-dfcdb59fb8b1
+  body: json
+  auth: none
+}
+
+query {
+  token: a38eac3d-5f97-4175-b988-dfcdb59fb8b1
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {"id": 6, "nom":"chorizo" , "prix":3}
+}
+
+docs {
+  Cette requête POST permet d'ajouter un ingrédient dans la base de données, ici nous spécifions exactement l'id que nous voulons que cette objet posséde.
+  Si l'objet en question n'est pas présent dans la base de donnée, la requête renvoie alors le status 201 qui indique que l'objet a bien été créé.
+  Sinon, l'api renvoie le code d'erreur 409 qui indique un conflit.
+}

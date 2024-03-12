@@ -5,11 +5,107 @@ meta {
 }
 
 post {
-  url: http://localhost:8080/sae/commandes
+  url: http://localhost:8080/sae/commandes?token=a38eac3d-5f97-4175-b988-dfcdb59fb8b1
   body: json
   auth: none
 }
 
+query {
+  token: a38eac3d-5f97-4175-b988-dfcdb59fb8b1
+}
+
 body:json {
-  {"id":2,"nom":"Commande 2","pizzas":{"id_commande":2,"pizzas":[{"id":1,"nom":"Margherita","pate":{"id":4,"nom":"pate a pizza","prix":0.5},"prix":40.0,"ingredients":{"id_pizza":1,"ingredients":[{"id":1,"nom":"tomate","prix":1.5},{"id":2,"nom":"mozzarella","prix":2.0}]}},{"id":1,"nom":"Margherita","pate":{"id":4,"nom":"pate a pizza","prix":0.5},"prix":40.0,"ingredients":{"id_pizza":1,"ingredients":[{"id":1,"nom":"tomate","prix":1.5},{"id":2,"nom":"mozzarella","prix":2.0}]}},{"id":1,"nom":"Margherita","pate":{"id":4,"nom":"pate a pizza","prix":0.5},"prix":40.0,"ingredients":{"id_pizza":1,"ingredients":[{"id":1,"nom":"tomate","prix":1.5},{"id":2,"nom":"mozzarella","prix":2.0}]}}]},"date":"2024-02-22"}
+  {
+    "id": 2,
+    "nom": "Commande 2",
+    "pizzas": {
+      "id_commande": 2,
+      "pizzas": [
+        {
+          "id": 1,
+          "nom": "Margherita",
+          "pate": {
+            "id": 4,
+            "nom": "pate a pizza",
+            "prix": 0.5
+          },
+          "prix": 40,
+          "ingredients": {
+            "id_pizza": 1,
+            "ingredients": [
+              {
+                "id": 1,
+                "nom": "tomate",
+                "prix": 1.5
+              },
+              {
+                "id": 2,
+                "nom": "mozzarella",
+                "prix": 2
+              }
+            ]
+          }
+        },
+        {
+          "id": 1,
+          "nom": "Margherita",
+          "pate": {
+            "id": 4,
+            "nom": "pate a pizza",
+            "prix": 0.5
+          },
+          "prix": 40,
+          "ingredients": {
+            "id_pizza": 1,
+            "ingredients": [
+              {
+                "id": 1,
+                "nom": "tomate",
+                "prix": 1.5
+              },
+              {
+                "id": 2,
+                "nom": "mozzarella",
+                "prix": 2
+              }
+            ]
+          }
+        },
+        {
+          "id": 1,
+          "nom": "Margherita",
+          "pate": {
+            "id": 4,
+            "nom": "pate a pizza",
+            "prix": 0.5
+          },
+          "prix": 40,
+          "ingredients": {
+            "id_pizza": 1,
+            "ingredients": [
+              {
+                "id": 1,
+                "nom": "tomate",
+                "prix": 1.5
+              },
+              {
+                "id": 2,
+                "nom": "mozzarella",
+                "prix": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "date": "2024-02-22"
+  }
+}
+
+docs {
+  Cette requête POST permet d'ajouter à la base de données une commande. Cette commande doit être donnée au format JSON. Cette objet est composé de:
+  - Son id (un nombre) - Si non indiqué, le code va en générer un unique.
+  - Le nom de sa commande (un texte)
+  - Une liste de pizzas
+  - La date de la commande (une date)
 }

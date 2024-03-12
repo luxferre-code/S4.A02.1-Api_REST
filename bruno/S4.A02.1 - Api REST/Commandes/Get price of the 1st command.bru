@@ -1,0 +1,15 @@
+meta {
+  name: Get price of the 1st command
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:8080/sae/commandes/1/prixfinal
+  body: none
+  auth: none
+}
+
+docs {
+  Cette requête GET permet de récuperer le prix final d'une commande grâce à son identifiant dans l'url. Si l'identifiant n'est pas inscrit dans la base de données, alors l'api renvoie le code 404 indiquant que l'objet n'a pas été trouvé.
+}

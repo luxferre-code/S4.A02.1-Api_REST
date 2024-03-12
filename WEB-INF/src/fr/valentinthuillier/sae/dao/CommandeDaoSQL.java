@@ -56,11 +56,33 @@ public class CommandeDaoSQL implements IDao<Commande> {
     @Override
     public boolean save(Commande object) {
         try (Connection con = DS.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("INSERT INTO commande (id, nom, date) VALUES (?, ?, ?)");
-            ps.setInt(1, object.getId());
-            ps.setString(2, object.getNom());
-            ps.setDate(3, Date.valueOf(object.getDate().toString()));
-            return ps.executeUpdate() == 1 && new CommandePizzaDaoSQL().save(object.getPizzas());
+            PreparedStatement ps;
+            if (object.getId() == 0) {
+                ps = con.prepareStatement("INSERT INTO commande (nom, date) VALUES (?, ?)");
+                ps.setString(1, object.getNom());
+                ps.setDate(2, Date.valueOf(object.getDate().toString()));
+            } else {
+                ps = con.prepareStatement("INSERT INTO commande (id, nom, date) VALUES (?, ?, ?)");
+                ps.setInt(1, object.getId());
+                ps.setString(2, object.getNom());
+                ps.setDate(3, Date.valueOf(object.getDate().toString()));
+            }
+            if (ps.executeUpdate() < 1) {
+                return false;
+            }
+            int id = object.getId();
+            if (id == 0) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    id = rs.getInt(1);
+                } else {
+                    System.out.println("Erreur lors de la récupération de l'id de la commande");
+                    return false;
+                }
+            }
+            object.setId(id);
+            object.getPizzas().setId_commande(object.getId());
+            return new CommandePizzaDaoSQL().save(object.getPizzas());
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return false;

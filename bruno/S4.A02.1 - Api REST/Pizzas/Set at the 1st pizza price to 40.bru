@@ -5,11 +5,19 @@ meta {
 }
 
 patch {
-  url: http://localhost:8080/sae/pizzas/1
+  url: http://localhost:8080/sae/pizzas/1?token=a38eac3d-5f97-4175-b988-dfcdb59fb8b1
   body: json
   auth: none
 }
 
+query {
+  token: a38eac3d-5f97-4175-b988-dfcdb59fb8b1
+}
+
 body:json {
   { "prix": 40 }
+}
+
+docs {
+  Cette requête PATCH permet de modifier un/des attribut(s) d'une pizza. Cette requête renvoie si la modification a bien été effectué le code 204, sinon renvoie soit 404 si l'objet donné n'est pas valide, ou bien 400 si la requête n'est pas bonne
 }

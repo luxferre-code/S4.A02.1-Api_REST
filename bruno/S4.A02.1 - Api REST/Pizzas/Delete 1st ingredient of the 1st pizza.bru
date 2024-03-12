@@ -5,9 +5,13 @@ meta {
 }
 
 delete {
-  url: http://localhost:8080/sae/pizzas/1/1
+  url: http://localhost:8080/sae/pizzas/1/1?token=a38eac3d-5f97-4175-b988-dfcdb59fb8b1
   body: none
   auth: none
+}
+
+query {
+  token: a38eac3d-5f97-4175-b988-dfcdb59fb8b1
 }
 
 body:json {
@@ -16,4 +20,8 @@ body:json {
       "nom": "tomate",
       "prix": 1.5
   }
+}
+
+docs {
+  Cette requête DELETE permet de supprimer un ingrédient d'une pizza (ici la pizza avec l'id 1 et l'ingrédient qui la composé avec l'id 1). Si l'ingrédient est bien présent dans la pizza et qu'il a bien été supprimé de cette dernière, l'api renvoie le code 204 indiquant qu'il n'y a rien  (donc que c'est bien supprimé). Sinon, elle renvoie le code 404 indiquant qu'elle n'a rien trouvé
 }

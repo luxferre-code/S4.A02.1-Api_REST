@@ -1,0 +1,28 @@
+meta {
+  name: Add a ingredient (id not specified)
+  type: http
+  seq: 9
+}
+
+post {
+  url: http://localhost:8080/sae/ingredients?token=a38eac3d-5f97-4175-b988-dfcdb59fb8b1
+  body: json
+  auth: none
+}
+
+query {
+  token: a38eac3d-5f97-4175-b988-dfcdb59fb8b1
+}
+
+headers {
+  Content-Type: application/json
+}
+
+body:json {
+  {"nom": "carotte" , "prix": 0.2}
+}
+
+docs {
+  Cette requête POST permet d'ajouter un ingrédient dans la base de données, ici nous ne spécifions pas l'id que nous voulons que cette objet posséde.
+  L'api renvoie toujours 201 si l'objet qui a été transmis est complet (pas de vérification du non ni du prix).
+}

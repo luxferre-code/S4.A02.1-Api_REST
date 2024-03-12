@@ -56,6 +56,7 @@ public class CommandePizzaDaoSQL implements IDao<CommandePizza> {
 
     @Override
     public boolean save(CommandePizza object) {
+        System.out.println("CommandePizzaDaoSQL.save()");
         try (Connection con = DS.getConnection()) {
             PreparedStatement ps = con.prepareStatement("INSERT INTO commande_pizza (commande, pizza) VALUES (?, ?)");
             for (Pizza pizza : object.getPizzas()) {

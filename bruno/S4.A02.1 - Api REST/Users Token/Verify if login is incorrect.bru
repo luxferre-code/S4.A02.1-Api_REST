@@ -1,0 +1,20 @@
+meta {
+  name: Verify if login is incorrect
+  type: http
+  seq: 2
+}
+
+get {
+  url: http://localhost:8080/sae/users/token?login=brubru&pwd=bruno
+  body: none
+  auth: none
+}
+
+query {
+  login: brubru
+  pwd: bruno
+}
+
+docs {
+  Cette requête démontre que si le login est incorrect, alors la requête renvoie une erreur qui indique que l'utilisateur n'est pas autorisé
+}

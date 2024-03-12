@@ -66,6 +66,7 @@ public class UsersToken extends HttpServlet {
 
     public static boolean checkToken(String token) {
         if(token == null || token.isBlank()) return false;
+        System.out.println("Vérification du token : " + token);
         try(Connection con = DS.getConnection()) {
 
             // Vérification si le token est présent dans la base de données

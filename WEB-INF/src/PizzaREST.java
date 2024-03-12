@@ -97,7 +97,7 @@ public class PizzaREST extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(UsersToken.checkToken(req.getParameter("token"))) {
+        if(!UsersToken.checkToken(req.getParameter("token"))) {
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
@@ -182,7 +182,7 @@ public class PizzaREST extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(UsersToken.checkToken(req.getParameter("token"))) {
+        if(!UsersToken.checkToken(req.getParameter("token"))) {
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
@@ -259,7 +259,7 @@ public class PizzaREST extends HttpServlet {
     }
 
     protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(UsersToken.checkToken(req.getParameter("token"))) {
+        if(!UsersToken.checkToken(req.getParameter("token"))) {
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }

@@ -57,13 +57,18 @@ public class IngredientDaoSQL implements IDao<Ingredient> {
     @Override
     public boolean save(Ingredient object) {
         try(Connection con = DS.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("INSERT INTO ingredient(id, nom, prix) VALUES(?, ?, ?)");
-            ps.setInt(1, object.getId());
-            ps.setString(2, object.getNom());
-            ps.setDouble(3, object.getPrix());
-            ps.executeUpdate();
-            ps.close();
-            return true;
+            PreparedStatement ps;
+            if(object.getId() <= 0) {
+                ps = con.prepareStatement("INSERT INTO ingredient(nom, prix) VALUES(?, ?)");
+                ps.setString(1, object.getNom());
+                ps.setDouble(2, object.getPrix());
+            } else {
+                ps = con.prepareStatement("INSERT INTO ingredient(id, nom, prix) VALUES(?, ?, ?)");
+                ps.setInt(1, object.getId());
+                ps.setString(2, object.getNom());
+                ps.setDouble(3, object.getPrix());
+            }
+            return ps.executeUpdate() > 0;
         } catch(Exception e) {
             System.out.println(e.getMessage());
             return false;

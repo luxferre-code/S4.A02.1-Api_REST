@@ -69,16 +69,23 @@ public class PizzaDaoSQL implements IDao<Pizza> {
     @Override
     public boolean save(Pizza object) {
         try(Connection con = DS.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("INSERT INTO pizza(id, nom, pate, prixBase) VALUES(?, ?, ?, ?)");
-            ps.setInt(1, object.getId());
-            ps.setString(2, object.getNom());
-            ps.setInt(3, object.getPate().getId());
-            ps.setDouble(4, object.getPrix());
-            ps.executeUpdate();
+            PreparedStatement ps;
+            if(object.getId() <= 0) {
+                ps = con.prepareStatement("INSERT INTO pizza(nom, pate, prixBase) VALUES(?, ?, ?)");
+                ps.setString(1, object.getNom());
+                ps.setInt(2, object.getPate().getId());
+                ps.setDouble(3, object.getPrix());
+            } else {
+                ps = con.prepareStatement("INSERT INTO pizza(id, nom, pate, prixBase) VALUES(?, ?, ?, ?)");
+                ps.setInt(1, object.getId());
+                ps.setString(2, object.getNom());
+                ps.setInt(3, object.getPate().getId());
+                ps.setDouble(4, object.getPrix());
+            }
+            if(ps.executeUpdate() <= 0) return false;
             ps.close();
-            try { composeDao.save(object.getIngredients()); }
-            catch(Exception e) { }
-            return true;
+            try { return composeDao.save(object.getIngredients()); }
+            catch(Exception e) { return false; }
         } catch(Exception e) {
             System.out.println(e.getMessage());
             return false;

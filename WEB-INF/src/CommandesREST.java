@@ -14,7 +14,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletResponse;   
 
 @WebServlet("/commandes/*")
 public class CommandesREST extends HttpServlet {
@@ -98,7 +98,7 @@ public class CommandesREST extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if(UsersToken.checkToken(req.getParameter("token"))) {
+        if(!UsersToken.checkToken(req.getParameter("token"))) {
             resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
             return;
         }
@@ -126,8 +126,11 @@ public class CommandesREST extends HttpServlet {
 
         if(parts.length == 0) {
             commande = objectMapper.readValue(json, Commande.class);
-            dao.save(commande);
-            resp.setStatus(HttpServletResponse.SC_CREATED);
+            if(dao.save(commande)) {
+                resp.setStatus(HttpServletResponse.SC_CREATED);
+            } else {
+                resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Mauvaise requête");
+            }
         } else {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Mauvaise requête");
         }
