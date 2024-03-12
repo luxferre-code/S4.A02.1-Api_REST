@@ -116,6 +116,10 @@ public class IngredientREST extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(UsersToken.checkToken(req.getParameter("token"))) {
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
         String json = null;
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream()))) {
             json = reader.readLine();
@@ -149,6 +153,10 @@ public class IngredientREST extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(UsersToken.checkToken(req.getParameter("token"))) {
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
         String info = req.getPathInfo();
         if(info == null) {
             info = "";

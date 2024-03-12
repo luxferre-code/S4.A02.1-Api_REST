@@ -64,4 +64,19 @@ public class UsersToken extends HttpServlet {
 
     }
 
+    public static boolean checkToken(String token) {
+        if(token == null || token.isBlank()) return false;
+        try(Connection con = DS.getConnection()) {
+
+            // Vérification si le token est présent dans la base de données
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM users WHERE token = ?");
+            ps.setString(1, token);
+            return ps.executeQuery().next();
+
+        } catch(Exception e) {
+            System.out.println("Error on UserToken.checkToken : " + e.getMessage());
+            return false;
+        }
+    }
+
 }

@@ -97,6 +97,10 @@ public class PizzaREST extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(UsersToken.checkToken(req.getParameter("token"))) {
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
         @SuppressWarnings("resource")
         String json = new BufferedReader(new InputStreamReader(req.getInputStream())).readLine();
         System.out.println(json);
@@ -178,6 +182,10 @@ public class PizzaREST extends HttpServlet {
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if(UsersToken.checkToken(req.getParameter("token"))) {
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
         String info = req.getPathInfo();
         if(info == null) {
             info = "";
@@ -251,7 +259,10 @@ public class PizzaREST extends HttpServlet {
     }
 
     protected void doPatch(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        //PATCH /pizzas/{id} modif d’un attribut d’une pizza (le prix augmente)
+        if(UsersToken.checkToken(req.getParameter("token"))) {
+            resp.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
         String info = req.getPathInfo();
         if(info == null) {
             info = "";
