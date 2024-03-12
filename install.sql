@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS pizza CASCADE;
 DROP TABLE IF EXISTS compose CASCADE;
 DROP TABLE IF EXISTS commande CASCADE;
 DROP TABLE IF EXISTS commande_pizza CASCADE;
+DROP TABLE IF EXISTS users;
 
 CREATE TABLE ingredient
 (
@@ -72,3 +73,13 @@ INSERT INTO commande_pizza(commande, pizza)
 VALUES (1, 1);
 INSERT INTO commande_pizza(commande, pizza)
 VALUES (1, 1);
+
+CREATE TABLE users
+(
+    login TEXT,
+    pwd TEXT,
+    token TEXT DEFAULT NULL,
+    CONSTRAINT users_pk PRIMARY KEY (login)
+);
+
+INSERT INTO users(login, pwd) VALUES ('jean', 'jean');
