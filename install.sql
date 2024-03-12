@@ -82,13 +82,5 @@ CREATE TABLE users
     CONSTRAINT users_pk PRIMARY KEY (login)
 );
 
-INSERT INTO users(login, pwd, token) VALUES ('jean', 'jean', 'a38eac3d-5f97-4175-b988-dfcdb59fb8b1'); -- Spécifique à la démo{
-    "id": 1,
-    "nom": "tomate",
-    "prix": 1.5
-}{
-    "id": 1,
-    "nom": "tomate",
-    "prix": 1.5
-}
+INSERT INTO users(login, pwd, token) VALUES ('jean', 'jean', 'a38eac3d-5f97-4175-b988-dfcdb59fb8b1'); -- Spécifique à la démo
 INSERT INTO users(login, pwd) VALUES ('bruno', 'bruno');
