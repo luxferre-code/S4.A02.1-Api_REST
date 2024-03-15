@@ -1,14 +1,178 @@
-<!-- Test.html -->
-<!DOCTYPE HTML>
-<html lang="fr">
-<HEAD>
-   <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-   <TITLE>Page de test</TITLE>
-   <link rel="stylesheet" href="style.css">
-</HEAD>
-<BODY>
-
-<h1>Tout a l'air de fonctionner</h1>
-
-</BODY>
-</HTML>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation technique</title>
+</head>
+<h1 id="api-ingredient">API Ingredient</h1>
+<hr />
+<h2 id="tableau-représentatif">Tableau représentatif</h2>
+<hr />
+<table>
+<colgroup>
+<col style="width: 9%" />
+<col style="width: 4%" />
+<col style="width: 11%" />
+<col style="width: 6%" />
+<col style="width: 68%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>URI</th>
+<th>Opération</th>
+<th>MIME</th>
+<th>Requête</th>
+<th>Réponse</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>/ingredients</td>
+<td>GET</td>
+<td>&lt;- application/json</td>
+<td></td>
+<td>La collection de tous les ingrédients.</td>
+</tr>
+<tr class="even">
+<td>/ingredients/{id}</td>
+<td>GET</td>
+<td>&lt;- application/json</td>
+<td></td>
+<td>L’ingrédient ayant l’id associé. Erreur 400 si l’id donné n’est pas un nombre. Erreur 404 si l’ingrédient n’existe pas.</td>
+</tr>
+<tr class="odd">
+<td>/ingredients/{id}/name</td>
+<td>GET</td>
+<td>&lt;- text/plain</td>
+<td></td>
+<td>Le nom de l’ingrédient ayant l’id associé. Erreur 400 si l’id donné n’est pas un nombre. Erreur 404 si l’ingrédient n’existe pas.</td>
+</tr>
+<tr class="even">
+<td>/ingredients/{id}/price</td>
+<td>GET</td>
+<td>&lt;- text/plain</td>
+<td></td>
+<td>Le prix de l’ingrédient ayant l’id associé. Erreur 400 si l’id donné n’est pas un nombre. Erreur 404 si l’ingrédient n’existe pas.</td>
+</tr>
+<tr class="odd">
+<td>/ingredients</td>
+<td>POST</td>
+<td>-&gt; application/json &lt;- status</td>
+<td>Ingrédient (ing1)</td>
+<td>Status 201 (créer). Erreur 400 si le JSON donné est invalide. Erreur 409 si l’ingrédient existe déjà. Erreur 500 si il y a eu un problème de sauvegarde</td>
+</tr>
+<tr class="even">
+<td>/ingredients/{id}</td>
+<td>DELETE</td>
+<td>&lt;- status</td>
+<td></td>
+<td>Status 204 (aucun contenu). Erreur 400 si l’url OU l’id est invalid. Erreur 404 si l’ingrédient ayant l’id associé n’a pas été trouvé. Erreur 500 si il y a eu un problème de suppression</td>
+</tr>
+</tbody>
+</table>
+<h2 id="corps-des-requêtes">Corps des requêtes</h2>
+<hr />
+<h3 id="représentation-dun-ingrédient">Représentation d’un ingrédient</h3>
+<hr />
+<p>Voici la représentation d’un ingrédient qui peut être retourné par l’API.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb1-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb1-2" title="2">  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-3" title="3">  <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb1-4" title="4">  <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb1-5" title="5"><span class="fu">}</span></a></code></pre></div>
+<p>A noté que l’identifiant n’est pas obligatoire pour l’ajout d’un ingrédient dans la base de données.<br />
+Si ce dernier n’est pas présent, la base de données va automatiquement lui en fournir un.<br />
+Donc il est possible d’envoyer un ingrédient sosu cette forme:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb2-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;carotte&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">0.2</span></a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="fu">}</span></a></code></pre></div>
+<h2 id="exemples">Exemples</h2>
+<hr />
+<h3 id="lister-tous-les-ingrédients-présents-dans-la-base-de-données">Lister tous les ingrédients présents dans la base de données</h3>
+<blockquote>
+<p>GET /ingredients</p>
+</blockquote>
+<p>Requête vers le serveur.</p>
+<p>Réponse:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb3-1" title="1"><span class="ot">[</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="fu">{</span></a>
+<a class="sourceLine" id="cb3-3" title="3">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-4" title="4">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-5" title="5">    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb3-6" title="6">  <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb3-7" title="7">  <span class="fu">{</span></a>
+<a class="sourceLine" id="cb3-8" title="8">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-9" title="9">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-10" title="10">    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb3-11" title="11">  <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb3-12" title="12">  <span class="fu">{</span></a>
+<a class="sourceLine" id="cb3-13" title="13">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-14" title="14">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;jambon&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-15" title="15">    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">2.5</span></a>
+<a class="sourceLine" id="cb3-16" title="16">  <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb3-17" title="17">  <span class="fu">{</span></a>
+<a class="sourceLine" id="cb3-18" title="18">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-19" title="19">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-20" title="20">    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb3-21" title="21">  <span class="fu">}</span></a>
+<a class="sourceLine" id="cb3-22" title="22"><span class="ot">]</span></a></code></pre></div>
+<p>Code du status de retour: <strong>200 OK</strong>.</p>
+<h3 id="récupérer-un-ingrédient-spécifique-avec-son-identifiant">Récupérer un ingrédient spécifique avec son identifiant</h3>
+<hr />
+<blockquote>
+<p>GET /ingredients/{id}</p>
+</blockquote>
+<p>Requête vers le serveur.</p>
+<p>Réponse:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb4-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-3" title="3">  <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-4" title="4">  <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb4-5" title="5"><span class="fu">}</span></a></code></pre></div>
+<p>Code du status de retour: <strong>200 OK</strong>.<br />
+Sinon <strong>404 Not Found</strong> si l’ingrédient n’existe pas.</p>
+<h3 id="récuperer-le-nom-du-premier-ingrédient.">Récuperer le nom du premier ingrédient.</h3>
+<hr />
+<blockquote>
+<p>GET /ingredients/{id}/name</p>
+</blockquote>
+<p>Requête vers le serveur.</p>
+<p>Réponse:</p>
+<pre class="text"><code>tomate</code></pre>
+<p>Code du status de retour: <strong>200 OK</strong>. Sinon <strong>404 Not Found</strong> si l’ingrédient n’existe pas.</p>
+<h3 id="ajout-dun-ingrédient-avec-un-identifiant">Ajout d’un ingrédient avec un identifiant</h3>
+<hr />
+<blockquote>
+<p>POST /ingredients?token={token}</p>
+</blockquote>
+<p>Requête vers le serveur:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb6-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb6-2" title="2">  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-3" title="3">  <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb6-4" title="4">  <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="fu">}</span></a></code></pre></div>
+<p>Réponse du serveur.</p>
+<p>Code du status de retour: <strong>201 Created</strong>.<br />
+Sinon <strong>409 Conflict</strong> si l’ingrédient avec cette identifiant existe déjà.</p>
+<h3 id="ajout-dun-ingrédient-sans-identifiant.">Ajout d’un ingrédient sans identifiant.</h3>
+<hr />
+<blockquote>
+<p>POST /ingredients?token={token}</p>
+</blockquote>
+<p>Requête vers le serveur:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb7-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb7-2" title="2">  <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;carotte&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb7-3" title="3">  <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">0.2</span></a>
+<a class="sourceLine" id="cb7-4" title="4"><span class="fu">}</span></a></code></pre></div>
+<p>Réponse du serveur.</p>
+<p>Code du status de retour: <strong>201 Created</strong>.</p>
+<h3 id="suppresion-dun-ingrédient">Suppresion d’un ingrédient</h3>
+<blockquote>
+<p>DELETE /ingredients/{id}?token={token}</p>
+</blockquote>
+<p>Requête vers le serveur.</p>
+<p>Réponse.</p>
+<p>Code du status de retour: <strong>204 No Content</strong>.<br />
+Sinon, <strong>404 Not Found</strong> si l’ingrédient n’existe pas.</p>
