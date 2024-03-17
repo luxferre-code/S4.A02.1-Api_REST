@@ -114,3 +114,7 @@ fabric.properties
 *.iml
 out
 gen
+
+config.prop
+
+WEB-INF/src/fr/valentinthuillier/sae/DS.java
