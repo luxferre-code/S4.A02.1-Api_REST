@@ -207,7 +207,7 @@ Sinon, **404 Not Found** si l'ingrédient n'existe pas.
 
 ---
 
-## Représentation d'une pizza  
+### Représentation d'une pizza  
 
 ---
 
@@ -480,3 +480,487 @@ Code du status de retour: **204 No Content**.
 Sinon **400 Bad Request** si le path / l'id / l'objet json est invalide.  
 Sinon **401 Unauthorized** si le token n’est pas valide.  
 Sinon **404 Not Found** si la pizza n'a pas été trouvée.  
+
+# Api Commandes  
+
+---
+
+## Tableau représentatif  
+
+---
+
+| URI                                       | Opération | MIME                             | Requête                       | Réponse                                                                                                                                                            |
+|-------------------------------------------|-----------|----------------------------------|-------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| /commandes                                | GET       | <- application/json              |                               | La collection de toutes les commandes.                                                                                                                             |
+| /commandes/{id}                           | GET       | <- application/json              |                               | L'objet commande sous format JSON.<br>Erreur 400 si l'id n'est pas un nombre.<br>Erreur 404 si la commande n'existe pas.                                           |
+| /commandes/{id}/{prixFinal/date/quantite} | GET       | <- application/json              |                               | L'attribut associé à la demande.<br>Erreur 400 si l'id n'est pas un nombre ou si le paramètre indiqué n'est pas valide.<br>Erreur 404 si la commande n'existe pas. |
+| /commandes                                | POST      | -> application/json<br><- status | Une commande sous format JSON | Ajoute la commande dans la base de données (status 201).<br>Erreur 400 si la requête est mauvaise.<br>Erreur 401 si le token n'est pas valide.                     |
+
+## Corps des requêtes  
+
+---  
+
+### Représentation d'une commande  
+
+---  
+
+Voici la représentation d'une commande qui peut être retourner par l'API.  
+
+```json
+{
+	"id":1,
+	"nom":"Commande 1",
+	"pizzas":{
+		"id_commande":1,
+		"pizzas":[
+			{
+				"id":1,
+				"nom":"Margherita",
+				"pate":{
+					"id":4,
+					"nom":"pate a pizza",
+					"prix":0.5
+				},
+				"prix":6,
+				"ingredients":{
+					"id_pizza":1,
+					"ingredients":[
+						{
+							"id":1,
+							"nom":"tomate",
+							"prix":1.5
+						},
+						{
+							"id":2,
+							"nom":"mozzarella",
+							"prix":2
+						}
+					]
+				}
+			},
+			{
+				"id":1,
+				"nom":"Margherita",
+				"pate":{
+					"id":4,
+					"nom":"pate a pizza",
+					"prix":0.5
+				},
+				"prix":6,
+				"ingredients":{
+					"id_pizza":1,
+					"ingredients":[
+						{
+							"id":1,
+							"nom":"tomate",
+							"prix":1.5
+						},
+						{
+							"id":2,
+							"nom":"mozzarella",
+							"prix":2
+						}
+					]
+				}
+			},
+			{
+				"id":1,
+				"nom":"Margherita",
+				"pate":{
+					"id":4,
+					"nom":"pate a pizza",
+					"prix":0.5
+				},
+				"prix":6,
+				"ingredients":{
+					"id_pizza":1,
+					"ingredients":[
+						{
+							"id":1,
+							"nom":"tomate",
+							"prix":1.5
+						},
+						{
+							"id":2,
+							"nom":"mozzarella",
+							"prix":2
+						}
+					]
+				}
+			}
+		]
+	},
+	"date":"2024-03-16"
+}
+```  
+
+Elle est composé de:  
+- Son identifiant unique  
+- Son nom  
+- Sa collection de pizza  
+- La date de la commande  
+
+## Base de données  
+
+---
+
+Pour stocker une commande, j'utilise 2 tables.  
+La première table qui stockent les informations principal de la commande.  
+```sql
+CREATE TABLE commande
+(
+    id       SERIAL, -- Identifiant unique
+    nom      TEXT, -- Son nom
+    date    DATE DEFAULT CURRENT_DATE, -- La date de la commande (par défaut aujourd'hui)
+    CONSTRAINT commande_pk PRIMARY KEY (id) -- Contrainte identifiant unique
+);
+```  
+
+La deuxième table stocke ce que compose la commande (les identifiants des pizzas).  
+```sql
+CREATE TABLE commande_pizza
+(
+    commande INT, -- L'identifiant unique de la commande
+    pizza    INT, -- L'identifiant unique de la pizza
+    CONSTRAINT commande_pizza_commande_fk FOREIGN KEY (commande) REFERENCES commande (id) ON DELETE CASCADE,  -- Contrainte vérifi si l'id de la commande est valide dans la table commande
+    CONSTRAINT commande_pizza_pizza_fk FOREIGN KEY (pizza) REFERENCES pizza (id) ON DELETE CASCADE -- Contrainte vérifi si l'id de la pizza est valide dans la table pizza
+);
+```
+
+## Exemples  
+
+---  
+
+### Lister toutes les commandes.  
+
+> GET /commandes  
+
+Requête vers le serveur.  
+
+Réponse:  
+
+```json
+[
+  {
+    "id": 1,
+    "nom": "Commande 1",
+    "pizzas": {
+      "id_commande": 1,
+      "pizzas": [
+        {
+          "id": 1,
+          "nom": "Margherita",
+          "pate": {
+            "id": 4,
+            "nom": "pate a pizza",
+            "prix": 0.5
+          },
+          "prix": 6,
+          "ingredients": {
+            "id_pizza": 1,
+            "ingredients": [
+              {
+                "id": 1,
+                "nom": "tomate",
+                "prix": 1.5
+              },
+              {
+                "id": 2,
+                "nom": "mozzarella",
+                "prix": 2
+              }
+            ]
+          }
+        },
+        {
+          "id": 1,
+          "nom": "Margherita",
+          "pate": {
+            "id": 4,
+            "nom": "pate a pizza",
+            "prix": 0.5
+          },
+          "prix": 6,
+          "ingredients": {
+            "id_pizza": 1,
+            "ingredients": [
+              {
+                "id": 1,
+                "nom": "tomate",
+                "prix": 1.5
+              },
+              {
+                "id": 2,
+                "nom": "mozzarella",
+                "prix": 2
+              }
+            ]
+          }
+        },
+        {
+          "id": 1,
+          "nom": "Margherita",
+          "pate": {
+            "id": 4,
+            "nom": "pate a pizza",
+            "prix": 0.5
+          },
+          "prix": 6,
+          "ingredients": {
+            "id_pizza": 1,
+            "ingredients": [
+              {
+                "id": 1,
+                "nom": "tomate",
+                "prix": 1.5
+              },
+              {
+                "id": 2,
+                "nom": "mozzarella",
+                "prix": 2
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "date": "2024-03-16"
+  }
+]
+```  
+
+Code de status de retour: **200 OK**.  
+
+### Récupérer une commande spécifique grâce à son identifiant.  
+
+> GET /commandes/{id}  
+
+Requête vers le serveur.  
+
+**{id} => 1**  
+
+Réponse:  
+```json
+{
+	"id":1,
+	"nom":"Commande 1",
+	"pizzas":{
+		"id_commande":1,
+		"pizzas":[
+			{
+				"id":1,
+				"nom":"Margherita",
+				"pate":{
+					"id":4,
+					"nom":"pate a pizza",
+					"prix":0.5
+				},
+				"prix":6,
+				"ingredients":{
+					"id_pizza":1,
+					"ingredients":[
+						{
+							"id":1,
+							"nom":"tomate",
+							"prix":1.5
+						},
+						{
+							"id":2,
+							"nom":"mozzarella",
+							"prix":2
+						}
+					]
+				}
+			},
+			{
+				"id":1,
+				"nom":"Margherita",
+				"pate":{
+					"id":4,
+					"nom":"pate a pizza",
+					"prix":0.5
+				},
+				"prix":6,
+				"ingredients":{
+					"id_pizza":1,
+					"ingredients":[
+						{
+							"id":1,
+							"nom":"tomate",
+							"prix":1.5
+						},
+						{
+							"id":2,
+							"nom":"mozzarella",
+							"prix":2
+						}
+					]
+				}
+			},
+			{
+				"id":1,
+				"nom":"Margherita",
+				"pate":{
+					"id":4,
+					"nom":"pate a pizza",
+					"prix":0.5
+				},
+				"prix":6,
+				"ingredients":{
+					"id_pizza":1,
+					"ingredients":[
+						{
+							"id":1,
+							"nom":"tomate",
+							"prix":1.5
+						},
+						{
+							"id":2,
+							"nom":"mozzarella",
+							"prix":2
+						}
+					]
+				}
+			}
+		]
+	},
+	"date":"2024-03-16"
+}
+```  
+
+Code de status de retour: **200 OK**.  
+Sinon **400 Bad Request** si l'id n'est pas un nombre.  
+Sinon **404 Not Found** si la commande n'existe pas.  
+
+### Récuperer le prix final de la commande.  
+
+> GET /commande/{id}/prixFinal  
+
+Requête vers le serveur. **{id} -> 1**  
+
+Réponse:  
+
+```json
+18
+```
+
+Code de status de retour: **200 OK**.  
+Sinon **400 Bad Request** si l'id n'est pas un nombre ou si le paramètre indiqué n'est pas valide.  
+Sinon **404 Not Found** si la commande n'existe pas.  
+
+### Ajout d'une commande.  
+
+> POST /commandes?token={token}  
+
+Requête vers le serveur:  
+```json
+{
+	"id":2,
+	"nom":"Commande 2",
+	"pizzas":{
+		"id_commande":2,
+		"pizzas":[
+			{
+				"id":1,
+				"nom":"Margherita",
+				"pate":{
+					"id":4,
+					"nom":"pate a pizza",
+					"prix":0.5
+				},
+				"prix":40,
+				"ingredients":{
+					"id_pizza":1,
+					"ingredients":[
+						{
+							"id":1,
+							"nom":"tomate",
+							"prix":1.5
+						},
+						{
+							"id":2,
+							"nom":"mozzarella",
+							"prix":2
+						}
+					]
+				}
+			},
+			{
+				"id":1,
+				"nom":"Margherita",
+				"pate":{
+					"id":4,
+					"nom":"pate a pizza",
+					"prix":0.5
+				},
+				"prix":40,
+				"ingredients":{
+					"id_pizza":1,
+					"ingredients":[
+						{
+							"id":1,
+							"nom":"tomate",
+							"prix":1.5
+						},
+						{
+							"id":2,
+							"nom":"mozzarella",
+							"prix":2
+						}
+					]
+				}
+			},
+			{
+				"id":1,
+				"nom":"Margherita",
+				"pate":{
+					"id":4,
+					"nom":"pate a pizza",
+					"prix":0.5
+				},
+				"prix":40,
+				"ingredients":{
+					"id_pizza":1,
+					"ingredients":[
+						{
+							"id":1,
+							"nom":"tomate",
+							"prix":1.5
+						},
+						{
+							"id":2,
+							"nom":"mozzarella",
+							"prix":2
+						}
+					]
+				}
+			}
+		]
+	},
+	"date":"2024-02-22"
+}
+```
+
+Réponse.  
+
+Code du status de retour: **201 Created**.  
+Sinon **400 Bad Request** si la requête est mauvaise.  
+Sinon **401 Unauthorized** si le token n'est pas valide.  
+
+# Avoir une APIToken
+
+Pour cela, il faut.  
+
+> GET /users/token?login={login}&pwd={pwd}  
+
+Requête vers le serveur:  
+**{login} => nom d'utilisateur**  
+**{pwd} => mot de passe**  
+
+Réponse du serveur:  
+
+```text
+a38eac3d-5f97-4175-b988-dfcdb59fb8b1
+```
+
+---

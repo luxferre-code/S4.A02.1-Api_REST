@@ -1,10 +1,137 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Documentation technique</title>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Valentin THUILLIER valentin.thuillier.etu@univ-lille.fr" />
+  <title>SAé S4.A02.1 - Rapport</title>
+  <style type="text/css">
+      code{white-space: pre-wrap;}
+      span.smallcaps{font-variant: small-caps;}
+      span.underline{text-decoration: underline;}
+      div.column{display: inline-block; vertical-align: top; width: 50%;}
+  </style>
+  <style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
 </head>
+<body>
+<header id="title-block-header">
+<h1 class="title">SAé S4.A02.1 - Rapport</h1>
+<p class="author">Valentin THUILLIER <a href="mailto:valentin.thuillier.etu@univ-lille.fr" class="email">valentin.thuillier.etu@univ-lille.fr</a></p>
+<p class="date">BUT2 (année 2023-2024)</p>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#api-ingredient">API Ingredient</a><ul>
+<li><a href="#tableau-représentatif">Tableau représentatif</a></li>
+<li><a href="#base-de-données">Base de données</a></li>
+<li><a href="#corps-des-requêtes">Corps des requêtes</a><ul>
+<li><a href="#représentation-dun-ingrédient">Représentation d’un ingrédient</a></li>
+</ul></li>
+<li><a href="#exemples">Exemples</a><ul>
+<li><a href="#lister-tous-les-ingrédients-présents-dans-la-base-de-données">Lister tous les ingrédients présents dans la base de données</a></li>
+<li><a href="#récupérer-un-ingrédient-spécifique-avec-son-identifiant">Récupérer un ingrédient spécifique avec son identifiant</a></li>
+<li><a href="#récuperer-le-nom-du-premier-ingrédient.">Récuperer le nom du premier ingrédient.</a></li>
+<li><a href="#ajout-dun-ingrédient-avec-un-identifiant">Ajout d’un ingrédient avec un identifiant</a></li>
+<li><a href="#ajout-dun-ingrédient-sans-identifiant.">Ajout d’un ingrédient sans identifiant.</a></li>
+<li><a href="#suppresion-dun-ingrédient">Suppresion d’un ingrédient</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#api-pizza">Api Pizza</a><ul>
+<li><a href="#tableau-représentatif-1">Tableau représentatif</a></li>
+<li><a href="#corps-des-requêtes-1">Corps des requêtes</a><ul>
+<li><a href="#représentation-dune-pizza">Représentation d’une pizza</a></li>
+</ul></li>
+<li><a href="#base-de-données-1">Base de données</a></li>
+<li><a href="#exemples-1">Exemples</a><ul>
+<li><a href="#lister-toutes-les-pizzas-présentes-dans-la-base-de-données.">Lister toutes les pizzas présentes dans la base de données.</a></li>
+<li><a href="#récupérer-une-pizza-spécifique-grâce-à-son-indentifiant.">Récupérer une pizza spécifique grâce à son indentifiant.</a></li>
+<li><a href="#récuperer-le-prix-final-dune-pizza">Récuperer le prix final d’une pizza</a></li>
+<li><a href="#ajout-dune-pizza-avec-sans-son-idenfiant">Ajout d’une pizza avec / sans son idenfiant</a></li>
+<li><a href="#ajout-dun-ingrédient-à-une-pizza">Ajout d’un ingrédient à une pizza</a></li>
+<li><a href="#suppression-dune-pizza">Suppression d’une pizza</a></li>
+<li><a href="#suppresion-dun-ingrédient-dune-pizza">Suppresion d’un ingrédient d’une pizza</a></li>
+<li><a href="#modification-dune-pizza">Modification d’une pizza</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#api-commandes">Api Commandes</a><ul>
+<li><a href="#tableau-représentatif-2">Tableau représentatif</a></li>
+<li><a href="#corps-des-requêtes-2">Corps des requêtes</a><ul>
+<li><a href="#représentation-dune-commande">Représentation d’une commande</a></li>
+</ul></li>
+<li><a href="#base-de-données-2">Base de données</a></li>
+<li><a href="#exemples-2">Exemples</a><ul>
+<li><a href="#lister-toutes-les-commandes.">Lister toutes les commandes.</a></li>
+<li><a href="#récupérer-une-commande-spécifique-grâce-à-son-identifiant.">Récupérer une commande spécifique grâce à son identifiant.</a></li>
+<li><a href="#récuperer-le-prix-final-de-la-commande.">Récuperer le prix final de la commande.</a></li>
+<li><a href="#ajout-dune-commande.">Ajout d’une commande.</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#avoir-une-apitoken">Avoir une APIToken</a></li>
+</ul>
+</nav>
 <h1 id="api-ingredient">API Ingredient</h1>
 <hr />
 <h2 id="tableau-représentatif">Tableau représentatif</h2>
@@ -71,23 +198,32 @@
 </tr>
 </tbody>
 </table>
+<h2 id="base-de-données">Base de données</h2>
+<p>Pour stocker les ingrédients dans la base de données, voici comment je l’ai implémenté.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">CREATE</span> <span class="kw">TABLE</span> ingredient</a>
+<a class="sourceLine" id="cb1-2" title="2">(</a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="kw">id</span>   SERIAL, <span class="co">-- Identifiant unique</span></a>
+<a class="sourceLine" id="cb1-4" title="4">    nom  TEXT, <span class="co">-- Nom de l&#39;ingrédient</span></a>
+<a class="sourceLine" id="cb1-5" title="5">    prix <span class="dt">DECIMAL</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="co">-- Prix</span></a>
+<a class="sourceLine" id="cb1-6" title="6">    <span class="kw">CONSTRAINT</span> ingredient_pk <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (<span class="kw">id</span>) <span class="co">-- Contrainte l&#39;identifiant unique</span></a>
+<a class="sourceLine" id="cb1-7" title="7">);</a></code></pre></div>
 <h2 id="corps-des-requêtes">Corps des requêtes</h2>
 <hr />
 <h3 id="représentation-dun-ingrédient">Représentation d’un ingrédient</h3>
 <hr />
 <p>Voici la représentation d’un ingrédient qui peut être retourné par l’API.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb1-1" title="1"><span class="fu">{</span></a>
-<a class="sourceLine" id="cb1-2" title="2">  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb1-3" title="3">  <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb1-4" title="4">  <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">1.5</span></a>
-<a class="sourceLine" id="cb1-5" title="5"><span class="fu">}</span></a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb2-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb2-2" title="2">  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-3" title="3">  <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb2-4" title="4">  <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb2-5" title="5"><span class="fu">}</span></a></code></pre></div>
 <p>A noté que l’identifiant n’est pas obligatoire pour l’ajout d’un ingrédient dans la base de données.<br />
 Si ce dernier n’est pas présent, la base de données va automatiquement lui en fournir un.<br />
 Donc il est possible d’envoyer un ingrédient sosu cette forme:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb2-1" title="1"><span class="fu">{</span></a>
-<a class="sourceLine" id="cb2-2" title="2">  <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;carotte&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb2-3" title="3">  <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">0.2</span></a>
-<a class="sourceLine" id="cb2-4" title="4"><span class="fu">}</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb3-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb3-2" title="2">  <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;carotte&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb3-3" title="3">  <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">0.2</span></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="fu">}</span></a></code></pre></div>
 <h2 id="exemples">Exemples</h2>
 <hr />
 <h3 id="lister-tous-les-ingrédients-présents-dans-la-base-de-données">Lister tous les ingrédients présents dans la base de données</h3>
@@ -96,28 +232,28 @@ Donc il est possible d’envoyer un ingrédient sosu cette forme:</p>
 </blockquote>
 <p>Requête vers le serveur.</p>
 <p>Réponse:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb3-1" title="1"><span class="ot">[</span></a>
-<a class="sourceLine" id="cb3-2" title="2">  <span class="fu">{</span></a>
-<a class="sourceLine" id="cb3-3" title="3">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb3-4" title="4">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb3-5" title="5">    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">1.5</span></a>
-<a class="sourceLine" id="cb3-6" title="6">  <span class="fu">}</span><span class="ot">,</span></a>
-<a class="sourceLine" id="cb3-7" title="7">  <span class="fu">{</span></a>
-<a class="sourceLine" id="cb3-8" title="8">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb3-9" title="9">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb3-10" title="10">    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="dv">2</span></a>
-<a class="sourceLine" id="cb3-11" title="11">  <span class="fu">}</span><span class="ot">,</span></a>
-<a class="sourceLine" id="cb3-12" title="12">  <span class="fu">{</span></a>
-<a class="sourceLine" id="cb3-13" title="13">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb3-14" title="14">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;jambon&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb3-15" title="15">    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">2.5</span></a>
-<a class="sourceLine" id="cb3-16" title="16">  <span class="fu">}</span><span class="ot">,</span></a>
-<a class="sourceLine" id="cb3-17" title="17">  <span class="fu">{</span></a>
-<a class="sourceLine" id="cb3-18" title="18">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">4</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb3-19" title="19">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb3-20" title="20">    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">0.5</span></a>
-<a class="sourceLine" id="cb3-21" title="21">  <span class="fu">}</span></a>
-<a class="sourceLine" id="cb3-22" title="22"><span class="ot">]</span></a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb4-1" title="1"><span class="ot">[</span></a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="fu">{</span></a>
+<a class="sourceLine" id="cb4-3" title="3">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-4" title="4">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-5" title="5">    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb4-6" title="6">  <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb4-7" title="7">  <span class="fu">{</span></a>
+<a class="sourceLine" id="cb4-8" title="8">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-9" title="9">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-10" title="10">    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb4-11" title="11">  <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb4-12" title="12">  <span class="fu">{</span></a>
+<a class="sourceLine" id="cb4-13" title="13">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">3</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-14" title="14">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;jambon&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-15" title="15">    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">2.5</span></a>
+<a class="sourceLine" id="cb4-16" title="16">  <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb4-17" title="17">  <span class="fu">{</span></a>
+<a class="sourceLine" id="cb4-18" title="18">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-19" title="19">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb4-20" title="20">    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb4-21" title="21">  <span class="fu">}</span></a>
+<a class="sourceLine" id="cb4-22" title="22"><span class="ot">]</span></a></code></pre></div>
 <p>Code du status de retour: <strong>200 OK</strong>.</p>
 <h3 id="récupérer-un-ingrédient-spécifique-avec-son-identifiant">Récupérer un ingrédient spécifique avec son identifiant</h3>
 <hr />
@@ -126,11 +262,11 @@ Donc il est possible d’envoyer un ingrédient sosu cette forme:</p>
 </blockquote>
 <p>Requête vers le serveur.</p>
 <p>Réponse:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb4-1" title="1"><span class="fu">{</span></a>
-<a class="sourceLine" id="cb4-2" title="2">  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb4-3" title="3">  <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb4-4" title="4">  <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">1.5</span></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="fu">}</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb5-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb5-2" title="2">  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-3" title="3">  <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb5-4" title="4">  <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb5-5" title="5"><span class="fu">}</span></a></code></pre></div>
 <p>Code du status de retour: <strong>200 OK</strong>.<br />
 Sinon <strong>404 Not Found</strong> si l’ingrédient n’existe pas.</p>
 <h3 id="récuperer-le-nom-du-premier-ingrédient.">Récuperer le nom du premier ingrédient.</h3>
@@ -148,11 +284,11 @@ Sinon <strong>404 Not Found</strong> si l’ingrédient n’existe pas.</p>
 <p>POST /ingredients?token={token}</p>
 </blockquote>
 <p>Requête vers le serveur:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb6-1" title="1"><span class="fu">{</span></a>
-<a class="sourceLine" id="cb6-2" title="2">  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb6-3" title="3">  <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb6-4" title="4">  <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">1.5</span></a>
-<a class="sourceLine" id="cb6-5" title="5"><span class="fu">}</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb7-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb7-2" title="2">  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb7-3" title="3">  <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb7-4" title="4">  <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="fu">}</span></a></code></pre></div>
 <p>Réponse du serveur.</p>
 <p>Code du status de retour: <strong>201 Created</strong>.<br />
 Sinon <strong>409 Conflict</strong> si l’ingrédient avec cette identifiant existe déjà.</p>
@@ -162,10 +298,10 @@ Sinon <strong>409 Conflict</strong> si l’ingrédient avec cette identifiant ex
 <p>POST /ingredients?token={token}</p>
 </blockquote>
 <p>Requête vers le serveur:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb7-1" title="1"><span class="fu">{</span></a>
-<a class="sourceLine" id="cb7-2" title="2">  <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;carotte&quot;</span><span class="fu">,</span></a>
-<a class="sourceLine" id="cb7-3" title="3">  <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">0.2</span></a>
-<a class="sourceLine" id="cb7-4" title="4"><span class="fu">}</span></a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb8-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb8-2" title="2">  <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;carotte&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb8-3" title="3">  <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">0.2</span></a>
+<a class="sourceLine" id="cb8-4" title="4"><span class="fu">}</span></a></code></pre></div>
 <p>Réponse du serveur.</p>
 <p>Code du status de retour: <strong>201 Created</strong>.</p>
 <h3 id="suppresion-dun-ingrédient">Suppresion d’un ingrédient</h3>
@@ -176,3 +312,775 @@ Sinon <strong>409 Conflict</strong> si l’ingrédient avec cette identifiant ex
 <p>Réponse.</p>
 <p>Code du status de retour: <strong>204 No Content</strong>.<br />
 Sinon, <strong>404 Not Found</strong> si l’ingrédient n’existe pas.</p>
+<h1 id="api-pizza">Api Pizza</h1>
+<h2 id="tableau-représentatif-1">Tableau représentatif</h2>
+<table>
+<colgroup>
+<col style="width: 7%" />
+<col style="width: 3%" />
+<col style="width: 9%" />
+<col style="width: 8%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>URI</th>
+<th>Opération</th>
+<th>MIME</th>
+<th>Requête</th>
+<th>Réponse</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>/pizzas</td>
+<td>GET</td>
+<td>&lt;- application/json</td>
+<td></td>
+<td>La collection de toutes les pizzas.</td>
+</tr>
+<tr class="even">
+<td>/pizzas/{id}</td>
+<td>GET</td>
+<td>&lt;- application/json</td>
+<td></td>
+<td>La pizza ayant l’id associé.<br>Erreur 400 si l’id donné n’est pas un nombre.<br>Erreur 404 si la pizza n’existe pas.</td>
+</tr>
+<tr class="odd">
+<td>/pizzas/{id}/prixfinal</td>
+<td>GET</td>
+<td>&lt;- application/json</td>
+<td></td>
+<td>Le prix final (additionnant le prix + le prix de la pâte + le prix des ingrédients).<br>Erreur 400 si l’id donné n’est pas un nombre ou l’attribut demandé n’existe pas.<br>Erreur 404 si la pizza n’existe pas.</td>
+</tr>
+<tr class="even">
+<td>/pizzas</td>
+<td>POST</td>
+<td>-&gt; application/json<br>&lt;- status</td>
+<td>Pizza sous le format JSON</td>
+<td>Status 201 (créer).<br>Erreur 400 si le JSON n’est pas correct.<br>Erreur 401 si le token n’est pas valide.<br>Erreur 409 si la pizza existe déjà (même id).</td>
+</tr>
+<tr class="odd">
+<td>/pizzas/{id}</td>
+<td>POST</td>
+<td>-&gt; application/json<br>&lt;- status</td>
+<td>Ingrédient sous le format JSON</td>
+<td>Status 201 si bien ajouter.<br>Erreur 400 si le JSON n’est pas correct.<br>Erreur 401 si le token n’est pas valide.<br>Erreur 404 si la pizza / l’ingrédient n’a pas été trouvé.<br>Erreur 409 si l’ingrédient est déjà dans la pizza.</td>
+</tr>
+<tr class="even">
+<td>/pizzas/{id}</td>
+<td>DELETE</td>
+<td>&lt;- status</td>
+<td></td>
+<td>Status 204 si modification bien effective (aucun contenu).<br>Erreur 400 si l’id n’est pas valide. Erreur 401 si le token n’est pas valide.<br>Erreur 404 si la pizza n’a pas été trouvée.<br>Erreur 500 si une erreur du système.</td>
+</tr>
+<tr class="odd">
+<td>/pizzas/{id}/{idIngredient}</td>
+<td>DELETE</td>
+<td>&lt;- status</td>
+<td></td>
+<td>Status 204 si modification bien effective (aucun contenu).<br>Erreur 400 si l’id de la pizza / l’ingrédient n’est pas valide.<br>Erreur 401 si le token n’est pas valide.<br>Erreur 404 si la pizza / l’ingrédient / l’ingrédient dans la pizza n’est pas trouvé.</td>
+</tr>
+<tr class="even">
+<td>/pizzas/{id}</td>
+<td>PATCH</td>
+<td>-&gt; application/json<br>&lt;- status</td>
+<td></td>
+<td>Status 204 si modification bien effective (aucun contenu).<br>Erreur 400 si le path / l’id / l’objet json est invalide.<br>Erreur 401 si le token n’est pas valide.<br>Erreur 404 si la pizza n’a pas été trouvée.<br>Erreur 500 si une erreur système</td>
+</tr>
+</tbody>
+</table>
+<h2 id="corps-des-requêtes-1">Corps des requêtes</h2>
+<hr />
+<h3 id="représentation-dune-pizza">Représentation d’une pizza</h3>
+<hr />
+<p>Voici la représentation d’une pizza qui peut être retourné par l’API sous le format JSON.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb9-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb9-2" title="2">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb9-3" title="3">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;Margherita&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb9-4" title="4">    <span class="dt">&quot;pate&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb9-5" title="5">        <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb9-6" title="6">        <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb9-7" title="7">        <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb9-8" title="8">    <span class="fu">},</span></a>
+<a class="sourceLine" id="cb9-9" title="9">    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">6.0</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb9-10" title="10">    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb9-11" title="11">        <span class="dt">&quot;id_pizza&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb9-12" title="12">        <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span><span class="ot">[</span></a>
+<a class="sourceLine" id="cb9-13" title="13">            <span class="fu">{</span></a>
+<a class="sourceLine" id="cb9-14" title="14">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb9-15" title="15">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb9-16" title="16">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb9-17" title="17">            <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb9-18" title="18">            <span class="fu">{</span></a>
+<a class="sourceLine" id="cb9-19" title="19">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb9-20" title="20">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb9-21" title="21">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">2.0</span></a>
+<a class="sourceLine" id="cb9-22" title="22">            <span class="fu">}</span></a>
+<a class="sourceLine" id="cb9-23" title="23">        <span class="ot">]</span></a>
+<a class="sourceLine" id="cb9-24" title="24">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb9-25" title="25"><span class="fu">}</span></a></code></pre></div>
+<p>Elle est composé de:<br />
+- Son identifiant unique.<br />
+- Son nom.<br />
+- Sa pate qui est lui même une ingrédient.<br />
+- Son prix de “base”.<br />
+- La liste de tous ces ingrédients (hormis la pate).</p>
+<h2 id="base-de-données-1">Base de données</h2>
+<p>Pour stocker une pizza, nous utilisons 2 tables.<br />
+La première table qui stockent les informations principal d’une pizza.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">CREATE</span> <span class="kw">TABLE</span> pizza</a>
+<a class="sourceLine" id="cb10-2" title="2">(</a>
+<a class="sourceLine" id="cb10-3" title="3">    <span class="kw">id</span>       SERIAL, <span class="co">-- Identifiant unique</span></a>
+<a class="sourceLine" id="cb10-4" title="4">    nom      TEXT, <span class="co">-- Nom de la pizza</span></a>
+<a class="sourceLine" id="cb10-5" title="5">    pate     <span class="dt">INT</span>, <span class="co">-- Identifiant unique de la pate (un ingrédient)</span></a>
+<a class="sourceLine" id="cb10-6" title="6">    prixBase <span class="dt">DECIMAL</span>(<span class="dv">5</span>, <span class="dv">2</span>), <span class="co">-- Prix de base</span></a>
+<a class="sourceLine" id="cb10-7" title="7">    <span class="kw">CONSTRAINT</span> pizza_pk <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (<span class="kw">id</span>), <span class="co">-- Contrainte identifiant unique</span></a>
+<a class="sourceLine" id="cb10-8" title="8">    <span class="kw">CONSTRAINT</span> pizza_pate_fk <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (pate) <span class="kw">REFERENCES</span> ingredient (<span class="kw">id</span>) <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">CASCADE</span> <span class="co">-- Contrainte vérifi si l&#39;id de la pate est valide dans la table ingredient</span></a>
+<a class="sourceLine" id="cb10-9" title="9">);</a></code></pre></div>
+<p>La deuxième table stocke ce qui compose la pizza.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">CREATE</span> <span class="kw">TABLE</span> <span class="fu">compose</span></a>
+<a class="sourceLine" id="cb11-2" title="2">(</a>
+<a class="sourceLine" id="cb11-3" title="3">    pizza      <span class="dt">INT</span>, <span class="co">-- Identifiant unique de la pizza</span></a>
+<a class="sourceLine" id="cb11-4" title="4">    ingredient <span class="dt">INT</span>, <span class="co">-- Identifiant unique de l&#39;ingrédient</span></a>
+<a class="sourceLine" id="cb11-5" title="5">    <span class="kw">CONSTRAINT</span> compose_pk <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (pizza, ingredient), <span class="co">-- Contrainte identifiant unique</span></a>
+<a class="sourceLine" id="cb11-6" title="6">    <span class="kw">CONSTRAINT</span> compose_pizza_fk <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (pizza) <span class="kw">REFERENCES</span> pizza (<span class="kw">id</span>) <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">CASCADE</span>, <span class="co">-- Contrainte vérifi si l&#39;id de la pizza est valide dans la table pizza</span></a>
+<a class="sourceLine" id="cb11-7" title="7">    <span class="kw">CONSTRAINT</span> compose_ingredient_fk <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (ingredient) <span class="kw">REFERENCES</span> ingredient (<span class="kw">id</span>) <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">CASCADE</span>  <span class="co">-- Contrainte vérifi si l&#39;id de l&#39;ingrédient est valide dans la table ingredient</span></a>
+<a class="sourceLine" id="cb11-8" title="8">);</a></code></pre></div>
+<h2 id="exemples-1">Exemples</h2>
+<h3 id="lister-toutes-les-pizzas-présentes-dans-la-base-de-données.">Lister toutes les pizzas présentes dans la base de données.</h3>
+<blockquote>
+<p>GET /pizzas</p>
+</blockquote>
+<p>Requête vers le serveur.</p>
+<p>Réponse:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb12-1" title="1"><span class="ot">[</span></a>
+<a class="sourceLine" id="cb12-2" title="2">    <span class="fu">{</span></a>
+<a class="sourceLine" id="cb12-3" title="3">        <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-4" title="4">        <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;Margherita&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-5" title="5">        <span class="dt">&quot;pate&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb12-6" title="6">            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-7" title="7">            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-8" title="8">            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb12-9" title="9">        <span class="fu">},</span></a>
+<a class="sourceLine" id="cb12-10" title="10">        <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">6.0</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-11" title="11">        <span class="dt">&quot;ingredients&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb12-12" title="12">            <span class="dt">&quot;id_pizza&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-13" title="13">            <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span><span class="ot">[</span></a>
+<a class="sourceLine" id="cb12-14" title="14">                <span class="fu">{</span></a>
+<a class="sourceLine" id="cb12-15" title="15">                    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-16" title="16">                    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-17" title="17">                    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb12-18" title="18">                <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb12-19" title="19">                <span class="fu">{</span></a>
+<a class="sourceLine" id="cb12-20" title="20">                    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-21" title="21">                    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb12-22" title="22">                    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">2.0</span></a>
+<a class="sourceLine" id="cb12-23" title="23">                <span class="fu">}</span></a>
+<a class="sourceLine" id="cb12-24" title="24">            <span class="ot">]</span></a>
+<a class="sourceLine" id="cb12-25" title="25">        <span class="fu">}</span></a>
+<a class="sourceLine" id="cb12-26" title="26">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb12-27" title="27"><span class="ot">]</span></a></code></pre></div>
+<p>Code de status de retour: <strong>200 OK</strong>.</p>
+<h3 id="récupérer-une-pizza-spécifique-grâce-à-son-indentifiant.">Récupérer une pizza spécifique grâce à son indentifiant.</h3>
+<blockquote>
+<p>GET /pizzas/{id}</p>
+</blockquote>
+<p>Requête vers le serveur. <strong>{id} -&gt; 1</strong>.</p>
+<p>Réponse:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb13-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb13-2" title="2">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-3" title="3">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;Margherita&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-4" title="4">    <span class="dt">&quot;pate&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb13-5" title="5">        <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-6" title="6">        <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-7" title="7">        <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb13-8" title="8">    <span class="fu">},</span></a>
+<a class="sourceLine" id="cb13-9" title="9">    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">6.0</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-10" title="10">    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb13-11" title="11">        <span class="dt">&quot;id_pizza&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-12" title="12">        <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span><span class="ot">[</span></a>
+<a class="sourceLine" id="cb13-13" title="13">            <span class="fu">{</span></a>
+<a class="sourceLine" id="cb13-14" title="14">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-15" title="15">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-16" title="16">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb13-17" title="17">            <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb13-18" title="18">            <span class="fu">{</span></a>
+<a class="sourceLine" id="cb13-19" title="19">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-20" title="20">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb13-21" title="21">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">2.0</span></a>
+<a class="sourceLine" id="cb13-22" title="22">            <span class="fu">}</span></a>
+<a class="sourceLine" id="cb13-23" title="23">        <span class="ot">]</span></a>
+<a class="sourceLine" id="cb13-24" title="24">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb13-25" title="25"><span class="fu">}</span></a></code></pre></div>
+<p>Code du status de retour: <strong>200 OK</strong>.<br />
+Sinon <strong>400 Bad Request</strong> si l’id n’est pas un nombre.<br />
+Sinon <strong>404 Not Found</strong> si la pizza n’existe pas.</p>
+<h3 id="récuperer-le-prix-final-dune-pizza">Récuperer le prix final d’une pizza</h3>
+<blockquote>
+<p>GET /pizzas/{id}/prixFinal</p>
+</blockquote>
+<p>Requête vers le serveur. <strong>{id} -&gt; 1</strong></p>
+<p>Réponse:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb14-1" title="1"><span class="er">10</span></a></code></pre></div>
+<p>Code du status de retour: <strong>200 OK</strong>.<br />
+Sinon <strong>400 Bad Request</strong> si l’id donné n’est pas un nombre ou l’attribut demandé n’existe pas.<br />
+Sinon <strong>404 Not Found</strong> si la pizza n’existe pas.</p>
+<h3 id="ajout-dune-pizza-avec-sans-son-idenfiant">Ajout d’une pizza avec / sans son idenfiant</h3>
+<blockquote>
+<p>POST /pizzas?token={token}</p>
+</blockquote>
+<p>Requête vers le serveur:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb15-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb15-2" title="2">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-3" title="3">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;Pizza à la tomate :)&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-4" title="4">    <span class="dt">&quot;pate&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb15-5" title="5">      <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-6" title="6">      <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-7" title="7">      <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb15-8" title="8">    <span class="fu">},</span></a>
+<a class="sourceLine" id="cb15-9" title="9">    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-10" title="10">    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb15-11" title="11">      <span class="dt">&quot;id_pizza&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-12" title="12">      <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb15-13" title="13">        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb15-14" title="14">          <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-15" title="15">          <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb15-16" title="16">          <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb15-17" title="17">        <span class="fu">}</span></a>
+<a class="sourceLine" id="cb15-18" title="18">      <span class="ot">]</span></a>
+<a class="sourceLine" id="cb15-19" title="19">    <span class="fu">}</span></a>
+<a class="sourceLine" id="cb15-20" title="20">  <span class="fu">}</span></a></code></pre></div>
+<p>Réponse du serveur.</p>
+<p>Code du status de retour: <strong>201 Created</strong>.<br />
+Sinon <strong>400 Bad Request</strong> si le JSON n’est pas correct.<br />
+Sinon <strong>401 Unauthorized</strong> si le token n’est pas valide.<br />
+Sinon <strong>409 Conflict</strong> si la pizza existe déjà (même id).</p>
+<h3 id="ajout-dun-ingrédient-à-une-pizza">Ajout d’un ingrédient à une pizza</h3>
+<blockquote>
+<p>POST /pizzas/{id}?token={token}</p>
+</blockquote>
+<p>Requête vers le serveur:<br />
+<strong>{id} =&gt; 1</strong><br />
+<strong>{token} =&gt; APIToken</strong></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb16-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb16-2" title="2">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span></a>
+<a class="sourceLine" id="cb16-3" title="3"><span class="fu">}</span></a></code></pre></div>
+<p>Réponse du serveur:</p>
+<p>Code du status de retour: <strong>201 Created</strong>.<br />
+Sinon <strong>400 Bad Request</strong> si le JSON n’est pas correct.<br />
+Sinon <strong>401 Unauthorized</strong> si le token n’est pas valide.<br />
+Sinon <strong>404 Not Found</strong> si la pizza / l’ingrédient n’a pas été trouvé.<br />
+Sinon <strong>409 Conflict</strong> si la pizza existe déjà (même id).</p>
+<h3 id="suppression-dune-pizza">Suppression d’une pizza</h3>
+<blockquote>
+<p>DELETE /pizzas/{id}?token={token}</p>
+</blockquote>
+<p>Requête vers le serveur:<br />
+<strong>{id} =&gt; 1</strong><br />
+<strong>{token} =&gt; APIToken</strong></p>
+<p>Réponse du serveur:</p>
+<p>Code du status de retour: <strong>204 No Content</strong>.<br />
+Sinon <strong>400 Bad Request</strong> si l’id n’est pas valide.<br />
+Sinon <strong>401 Unauthorized</strong> si le token n’est pas valide.<br />
+Sinon <strong>404 Not Found</strong> si la pizza n’a pas été trouvée.</p>
+<h3 id="suppresion-dun-ingrédient-dune-pizza">Suppresion d’un ingrédient d’une pizza</h3>
+<blockquote>
+<p>DELETE /pizzas/{idPizza}/{idIngredient}?token={token}</p>
+</blockquote>
+<p>Requête vers le serveur:<br />
+<strong>{idPizza} =&gt; 1</strong><br />
+<strong>{idIngredient} =&gt; 1</strong><br />
+<strong>{token} =&gt; APIToken</strong></p>
+<p>Réponse du serveur:</p>
+<p>Code du status de retour: <strong>204 No Content</strong>.<br />
+Sinon <strong>400 Bad Request</strong> si l’id de la pizza / l’ingrédient n’est pas valide.<br />
+Sinon <strong>401 Unauthorized</strong> si le token n’est pas valide.<br />
+Sinon <strong>404 Not Found</strong> si la pizza / l’ingrédient / l’ingrédient dans la pizza n’est pas trouvé.</p>
+<h3 id="modification-dune-pizza">Modification d’une pizza</h3>
+<blockquote>
+<p>PATCH /pizzas/{id}?token={token}</p>
+</blockquote>
+<p>Requête vers le serveur:<br />
+<strong>{id} =&gt; 1</strong><br />
+<strong>{token} =&gt; APIToken</strong></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb17-1" title="1"><span class="fu">{</span> <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="dv">40</span> <span class="fu">}</span></a></code></pre></div>
+<p>Réponse du serveur:<br />
+Code du status de retour: <strong>204 No Content</strong>.<br />
+Sinon <strong>400 Bad Request</strong> si le path / l’id / l’objet json est invalide.<br />
+Sinon <strong>401 Unauthorized</strong> si le token n’est pas valide.<br />
+Sinon <strong>404 Not Found</strong> si la pizza n’a pas été trouvée.</p>
+<h1 id="api-commandes">Api Commandes</h1>
+<hr />
+<h2 id="tableau-représentatif-2">Tableau représentatif</h2>
+<hr />
+<table>
+<colgroup>
+<col style="width: 15%" />
+<col style="width: 3%" />
+<col style="width: 12%" />
+<col style="width: 10%" />
+<col style="width: 57%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>URI</th>
+<th>Opération</th>
+<th>MIME</th>
+<th>Requête</th>
+<th>Réponse</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>/commandes</td>
+<td>GET</td>
+<td>&lt;- application/json</td>
+<td></td>
+<td>La collection de toutes les commandes.</td>
+</tr>
+<tr class="even">
+<td>/commandes/{id}</td>
+<td>GET</td>
+<td>&lt;- application/json</td>
+<td></td>
+<td>L’objet commande sous format JSON.<br>Erreur 400 si l’id n’est pas un nombre.<br>Erreur 404 si la commande n’existe pas.</td>
+</tr>
+<tr class="odd">
+<td>/commandes/{id}/{prixFinal/date/quantite}</td>
+<td>GET</td>
+<td>&lt;- application/json</td>
+<td></td>
+<td>L’attribut associé à la demande.<br>Erreur 400 si l’id n’est pas un nombre ou si le paramètre indiqué n’est pas valide.<br>Erreur 404 si la commande n’existe pas.</td>
+</tr>
+<tr class="even">
+<td>/commandes</td>
+<td>POST</td>
+<td>-&gt; application/json<br>&lt;- status</td>
+<td>Une commande sous format JSON</td>
+<td>Ajoute la commande dans la base de données (status 201).<br>Erreur 400 si la requête est mauvaise.<br>Erreur 401 si le token n’est pas valide.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="corps-des-requêtes-2">Corps des requêtes</h2>
+<hr />
+<h3 id="représentation-dune-commande">Représentation d’une commande</h3>
+<hr />
+<p>Voici la représentation d’une commande qui peut être retourner par l’API.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb18-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb18-2" title="2">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-3" title="3">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;Commande 1&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-4" title="4">    <span class="dt">&quot;pizzas&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb18-5" title="5">        <span class="dt">&quot;id_commande&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-6" title="6">        <span class="dt">&quot;pizzas&quot;</span><span class="fu">:</span><span class="ot">[</span></a>
+<a class="sourceLine" id="cb18-7" title="7">            <span class="fu">{</span></a>
+<a class="sourceLine" id="cb18-8" title="8">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-9" title="9">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;Margherita&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-10" title="10">                <span class="dt">&quot;pate&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb18-11" title="11">                    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-12" title="12">                    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-13" title="13">                    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb18-14" title="14">                <span class="fu">},</span></a>
+<a class="sourceLine" id="cb18-15" title="15">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">6</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-16" title="16">                <span class="dt">&quot;ingredients&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb18-17" title="17">                    <span class="dt">&quot;id_pizza&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-18" title="18">                    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span><span class="ot">[</span></a>
+<a class="sourceLine" id="cb18-19" title="19">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb18-20" title="20">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-21" title="21">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-22" title="22">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb18-23" title="23">                        <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb18-24" title="24">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb18-25" title="25">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-26" title="26">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-27" title="27">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb18-28" title="28">                        <span class="fu">}</span></a>
+<a class="sourceLine" id="cb18-29" title="29">                    <span class="ot">]</span></a>
+<a class="sourceLine" id="cb18-30" title="30">                <span class="fu">}</span></a>
+<a class="sourceLine" id="cb18-31" title="31">            <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb18-32" title="32">            <span class="fu">{</span></a>
+<a class="sourceLine" id="cb18-33" title="33">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-34" title="34">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;Margherita&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-35" title="35">                <span class="dt">&quot;pate&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb18-36" title="36">                    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-37" title="37">                    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-38" title="38">                    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb18-39" title="39">                <span class="fu">},</span></a>
+<a class="sourceLine" id="cb18-40" title="40">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">6</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-41" title="41">                <span class="dt">&quot;ingredients&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb18-42" title="42">                    <span class="dt">&quot;id_pizza&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-43" title="43">                    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span><span class="ot">[</span></a>
+<a class="sourceLine" id="cb18-44" title="44">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb18-45" title="45">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-46" title="46">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-47" title="47">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb18-48" title="48">                        <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb18-49" title="49">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb18-50" title="50">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-51" title="51">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-52" title="52">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb18-53" title="53">                        <span class="fu">}</span></a>
+<a class="sourceLine" id="cb18-54" title="54">                    <span class="ot">]</span></a>
+<a class="sourceLine" id="cb18-55" title="55">                <span class="fu">}</span></a>
+<a class="sourceLine" id="cb18-56" title="56">            <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb18-57" title="57">            <span class="fu">{</span></a>
+<a class="sourceLine" id="cb18-58" title="58">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-59" title="59">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;Margherita&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-60" title="60">                <span class="dt">&quot;pate&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb18-61" title="61">                    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-62" title="62">                    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-63" title="63">                    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb18-64" title="64">                <span class="fu">},</span></a>
+<a class="sourceLine" id="cb18-65" title="65">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">6</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-66" title="66">                <span class="dt">&quot;ingredients&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb18-67" title="67">                    <span class="dt">&quot;id_pizza&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-68" title="68">                    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span><span class="ot">[</span></a>
+<a class="sourceLine" id="cb18-69" title="69">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb18-70" title="70">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-71" title="71">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-72" title="72">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb18-73" title="73">                        <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb18-74" title="74">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb18-75" title="75">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-76" title="76">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb18-77" title="77">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb18-78" title="78">                        <span class="fu">}</span></a>
+<a class="sourceLine" id="cb18-79" title="79">                    <span class="ot">]</span></a>
+<a class="sourceLine" id="cb18-80" title="80">                <span class="fu">}</span></a>
+<a class="sourceLine" id="cb18-81" title="81">            <span class="fu">}</span></a>
+<a class="sourceLine" id="cb18-82" title="82">        <span class="ot">]</span></a>
+<a class="sourceLine" id="cb18-83" title="83">    <span class="fu">},</span></a>
+<a class="sourceLine" id="cb18-84" title="84">    <span class="dt">&quot;date&quot;</span><span class="fu">:</span><span class="st">&quot;2024-03-16&quot;</span></a>
+<a class="sourceLine" id="cb18-85" title="85"><span class="fu">}</span></a></code></pre></div>
+<p>Elle est composé de:<br />
+- Son identifiant unique<br />
+- Son nom<br />
+- Sa collection de pizza<br />
+- La date de la commande</p>
+<h2 id="base-de-données-2">Base de données</h2>
+<hr />
+<p>Pour stocker une commande, j’utilise 2 tables.<br />
+La première table qui stockent les informations principal de la commande.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">CREATE</span> <span class="kw">TABLE</span> commande</a>
+<a class="sourceLine" id="cb19-2" title="2">(</a>
+<a class="sourceLine" id="cb19-3" title="3">    <span class="kw">id</span>       SERIAL, <span class="co">-- Identifiant unique</span></a>
+<a class="sourceLine" id="cb19-4" title="4">    nom      TEXT, <span class="co">-- Son nom</span></a>
+<a class="sourceLine" id="cb19-5" title="5">    <span class="dt">date</span>    <span class="dt">DATE</span> <span class="kw">DEFAULT</span> <span class="fu">CURRENT_DATE</span>, <span class="co">-- La date de la commande (par défaut aujourd&#39;hui)</span></a>
+<a class="sourceLine" id="cb19-6" title="6">    <span class="kw">CONSTRAINT</span> commande_pk <span class="kw">PRIMARY</span> <span class="kw">KEY</span> (<span class="kw">id</span>) <span class="co">-- Contrainte identifiant unique</span></a>
+<a class="sourceLine" id="cb19-7" title="7">);</a></code></pre></div>
+<p>La deuxième table stocke ce que compose la commande (les identifiants des pizzas).</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode sql"><code class="sourceCode sql"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">CREATE</span> <span class="kw">TABLE</span> commande_pizza</a>
+<a class="sourceLine" id="cb20-2" title="2">(</a>
+<a class="sourceLine" id="cb20-3" title="3">    commande <span class="dt">INT</span>, <span class="co">-- L&#39;identifiant unique de la commande</span></a>
+<a class="sourceLine" id="cb20-4" title="4">    pizza    <span class="dt">INT</span>, <span class="co">-- L&#39;identifiant unique de la pizza</span></a>
+<a class="sourceLine" id="cb20-5" title="5">    <span class="kw">CONSTRAINT</span> commande_pizza_commande_fk <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (commande) <span class="kw">REFERENCES</span> commande (<span class="kw">id</span>) <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">CASCADE</span>,  <span class="co">-- Contrainte vérifi si l&#39;id de la commande est valide dans la table commande</span></a>
+<a class="sourceLine" id="cb20-6" title="6">    <span class="kw">CONSTRAINT</span> commande_pizza_pizza_fk <span class="kw">FOREIGN</span> <span class="kw">KEY</span> (pizza) <span class="kw">REFERENCES</span> pizza (<span class="kw">id</span>) <span class="kw">ON</span> <span class="kw">DELETE</span> <span class="kw">CASCADE</span> <span class="co">-- Contrainte vérifi si l&#39;id de la pizza est valide dans la table pizza</span></a>
+<a class="sourceLine" id="cb20-7" title="7">);</a></code></pre></div>
+<h2 id="exemples-2">Exemples</h2>
+<hr />
+<h3 id="lister-toutes-les-commandes.">Lister toutes les commandes.</h3>
+<blockquote>
+<p>GET /commandes</p>
+</blockquote>
+<p>Requête vers le serveur.</p>
+<p>Réponse:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb21-1" title="1"><span class="ot">[</span></a>
+<a class="sourceLine" id="cb21-2" title="2">  <span class="fu">{</span></a>
+<a class="sourceLine" id="cb21-3" title="3">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-4" title="4">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;Commande 1&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-5" title="5">    <span class="dt">&quot;pizzas&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb21-6" title="6">      <span class="dt">&quot;id_commande&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-7" title="7">      <span class="dt">&quot;pizzas&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb21-8" title="8">        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb21-9" title="9">          <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-10" title="10">          <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;Margherita&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-11" title="11">          <span class="dt">&quot;pate&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb21-12" title="12">            <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-13" title="13">            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-14" title="14">            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb21-15" title="15">          <span class="fu">},</span></a>
+<a class="sourceLine" id="cb21-16" title="16">          <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="dv">6</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-17" title="17">          <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb21-18" title="18">            <span class="dt">&quot;id_pizza&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-19" title="19">            <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb21-20" title="20">              <span class="fu">{</span></a>
+<a class="sourceLine" id="cb21-21" title="21">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-22" title="22">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-23" title="23">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb21-24" title="24">              <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb21-25" title="25">              <span class="fu">{</span></a>
+<a class="sourceLine" id="cb21-26" title="26">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-27" title="27">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-28" title="28">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb21-29" title="29">              <span class="fu">}</span></a>
+<a class="sourceLine" id="cb21-30" title="30">            <span class="ot">]</span></a>
+<a class="sourceLine" id="cb21-31" title="31">          <span class="fu">}</span></a>
+<a class="sourceLine" id="cb21-32" title="32">        <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb21-33" title="33">        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb21-34" title="34">          <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-35" title="35">          <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;Margherita&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-36" title="36">          <span class="dt">&quot;pate&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb21-37" title="37">            <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-38" title="38">            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-39" title="39">            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb21-40" title="40">          <span class="fu">},</span></a>
+<a class="sourceLine" id="cb21-41" title="41">          <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="dv">6</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-42" title="42">          <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb21-43" title="43">            <span class="dt">&quot;id_pizza&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-44" title="44">            <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb21-45" title="45">              <span class="fu">{</span></a>
+<a class="sourceLine" id="cb21-46" title="46">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-47" title="47">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-48" title="48">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb21-49" title="49">              <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb21-50" title="50">              <span class="fu">{</span></a>
+<a class="sourceLine" id="cb21-51" title="51">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-52" title="52">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-53" title="53">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb21-54" title="54">              <span class="fu">}</span></a>
+<a class="sourceLine" id="cb21-55" title="55">            <span class="ot">]</span></a>
+<a class="sourceLine" id="cb21-56" title="56">          <span class="fu">}</span></a>
+<a class="sourceLine" id="cb21-57" title="57">        <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb21-58" title="58">        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb21-59" title="59">          <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-60" title="60">          <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;Margherita&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-61" title="61">          <span class="dt">&quot;pate&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb21-62" title="62">            <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-63" title="63">            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-64" title="64">            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb21-65" title="65">          <span class="fu">},</span></a>
+<a class="sourceLine" id="cb21-66" title="66">          <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="dv">6</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-67" title="67">          <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span> <span class="fu">{</span></a>
+<a class="sourceLine" id="cb21-68" title="68">            <span class="dt">&quot;id_pizza&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-69" title="69">            <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span> <span class="ot">[</span></a>
+<a class="sourceLine" id="cb21-70" title="70">              <span class="fu">{</span></a>
+<a class="sourceLine" id="cb21-71" title="71">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-72" title="72">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-73" title="73">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb21-74" title="74">              <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb21-75" title="75">              <span class="fu">{</span></a>
+<a class="sourceLine" id="cb21-76" title="76">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-77" title="77">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span> <span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb21-78" title="78">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb21-79" title="79">              <span class="fu">}</span></a>
+<a class="sourceLine" id="cb21-80" title="80">            <span class="ot">]</span></a>
+<a class="sourceLine" id="cb21-81" title="81">          <span class="fu">}</span></a>
+<a class="sourceLine" id="cb21-82" title="82">        <span class="fu">}</span></a>
+<a class="sourceLine" id="cb21-83" title="83">      <span class="ot">]</span></a>
+<a class="sourceLine" id="cb21-84" title="84">    <span class="fu">},</span></a>
+<a class="sourceLine" id="cb21-85" title="85">    <span class="dt">&quot;date&quot;</span><span class="fu">:</span> <span class="st">&quot;2024-03-16&quot;</span></a>
+<a class="sourceLine" id="cb21-86" title="86">  <span class="fu">}</span></a>
+<a class="sourceLine" id="cb21-87" title="87"><span class="ot">]</span></a></code></pre></div>
+<p>Code de status de retour: <strong>200 OK</strong>.</p>
+<h3 id="récupérer-une-commande-spécifique-grâce-à-son-identifiant.">Récupérer une commande spécifique grâce à son identifiant.</h3>
+<blockquote>
+<p>GET /commandes/{id}</p>
+</blockquote>
+<p>Requête vers le serveur.</p>
+<p><strong>{id} =&gt; 1</strong></p>
+<p>Réponse:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb22-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb22-2" title="2">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-3" title="3">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;Commande 1&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-4" title="4">    <span class="dt">&quot;pizzas&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb22-5" title="5">        <span class="dt">&quot;id_commande&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-6" title="6">        <span class="dt">&quot;pizzas&quot;</span><span class="fu">:</span><span class="ot">[</span></a>
+<a class="sourceLine" id="cb22-7" title="7">            <span class="fu">{</span></a>
+<a class="sourceLine" id="cb22-8" title="8">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-9" title="9">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;Margherita&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-10" title="10">                <span class="dt">&quot;pate&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb22-11" title="11">                    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-12" title="12">                    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-13" title="13">                    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb22-14" title="14">                <span class="fu">},</span></a>
+<a class="sourceLine" id="cb22-15" title="15">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">6</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-16" title="16">                <span class="dt">&quot;ingredients&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb22-17" title="17">                    <span class="dt">&quot;id_pizza&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-18" title="18">                    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span><span class="ot">[</span></a>
+<a class="sourceLine" id="cb22-19" title="19">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb22-20" title="20">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-21" title="21">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-22" title="22">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb22-23" title="23">                        <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb22-24" title="24">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb22-25" title="25">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-26" title="26">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-27" title="27">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb22-28" title="28">                        <span class="fu">}</span></a>
+<a class="sourceLine" id="cb22-29" title="29">                    <span class="ot">]</span></a>
+<a class="sourceLine" id="cb22-30" title="30">                <span class="fu">}</span></a>
+<a class="sourceLine" id="cb22-31" title="31">            <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb22-32" title="32">            <span class="fu">{</span></a>
+<a class="sourceLine" id="cb22-33" title="33">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-34" title="34">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;Margherita&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-35" title="35">                <span class="dt">&quot;pate&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb22-36" title="36">                    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-37" title="37">                    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-38" title="38">                    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb22-39" title="39">                <span class="fu">},</span></a>
+<a class="sourceLine" id="cb22-40" title="40">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">6</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-41" title="41">                <span class="dt">&quot;ingredients&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb22-42" title="42">                    <span class="dt">&quot;id_pizza&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-43" title="43">                    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span><span class="ot">[</span></a>
+<a class="sourceLine" id="cb22-44" title="44">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb22-45" title="45">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-46" title="46">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-47" title="47">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb22-48" title="48">                        <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb22-49" title="49">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb22-50" title="50">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-51" title="51">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-52" title="52">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb22-53" title="53">                        <span class="fu">}</span></a>
+<a class="sourceLine" id="cb22-54" title="54">                    <span class="ot">]</span></a>
+<a class="sourceLine" id="cb22-55" title="55">                <span class="fu">}</span></a>
+<a class="sourceLine" id="cb22-56" title="56">            <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb22-57" title="57">            <span class="fu">{</span></a>
+<a class="sourceLine" id="cb22-58" title="58">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-59" title="59">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;Margherita&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-60" title="60">                <span class="dt">&quot;pate&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb22-61" title="61">                    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-62" title="62">                    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-63" title="63">                    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb22-64" title="64">                <span class="fu">},</span></a>
+<a class="sourceLine" id="cb22-65" title="65">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">6</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-66" title="66">                <span class="dt">&quot;ingredients&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb22-67" title="67">                    <span class="dt">&quot;id_pizza&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-68" title="68">                    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span><span class="ot">[</span></a>
+<a class="sourceLine" id="cb22-69" title="69">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb22-70" title="70">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-71" title="71">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-72" title="72">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb22-73" title="73">                        <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb22-74" title="74">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb22-75" title="75">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-76" title="76">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb22-77" title="77">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb22-78" title="78">                        <span class="fu">}</span></a>
+<a class="sourceLine" id="cb22-79" title="79">                    <span class="ot">]</span></a>
+<a class="sourceLine" id="cb22-80" title="80">                <span class="fu">}</span></a>
+<a class="sourceLine" id="cb22-81" title="81">            <span class="fu">}</span></a>
+<a class="sourceLine" id="cb22-82" title="82">        <span class="ot">]</span></a>
+<a class="sourceLine" id="cb22-83" title="83">    <span class="fu">},</span></a>
+<a class="sourceLine" id="cb22-84" title="84">    <span class="dt">&quot;date&quot;</span><span class="fu">:</span><span class="st">&quot;2024-03-16&quot;</span></a>
+<a class="sourceLine" id="cb22-85" title="85"><span class="fu">}</span></a></code></pre></div>
+<p>Code de status de retour: <strong>200 OK</strong>.<br />
+Sinon <strong>400 Bad Request</strong> si l’id n’est pas un nombre.<br />
+Sinon <strong>404 Not Found</strong> si la commande n’existe pas.</p>
+<h3 id="récuperer-le-prix-final-de-la-commande.">Récuperer le prix final de la commande.</h3>
+<blockquote>
+<p>GET /commande/{id}/prixFinal</p>
+</blockquote>
+<p>Requête vers le serveur. <strong>{id} -&gt; 1</strong></p>
+<p>Réponse:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb23-1" title="1"><span class="er">18</span></a></code></pre></div>
+<p>Code de status de retour: <strong>200 OK</strong>.<br />
+Sinon <strong>400 Bad Request</strong> si l’id n’est pas un nombre ou si le paramètre indiqué n’est pas valide.<br />
+Sinon <strong>404 Not Found</strong> si la commande n’existe pas.</p>
+<h3 id="ajout-dune-commande.">Ajout d’une commande.</h3>
+<blockquote>
+<p>POST /commandes?token={token}</p>
+</blockquote>
+<p>Requête vers le serveur:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode json"><code class="sourceCode json"><a class="sourceLine" id="cb24-1" title="1"><span class="fu">{</span></a>
+<a class="sourceLine" id="cb24-2" title="2">    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-3" title="3">    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;Commande 2&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-4" title="4">    <span class="dt">&quot;pizzas&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb24-5" title="5">        <span class="dt">&quot;id_commande&quot;</span><span class="fu">:</span><span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-6" title="6">        <span class="dt">&quot;pizzas&quot;</span><span class="fu">:</span><span class="ot">[</span></a>
+<a class="sourceLine" id="cb24-7" title="7">            <span class="fu">{</span></a>
+<a class="sourceLine" id="cb24-8" title="8">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-9" title="9">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;Margherita&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-10" title="10">                <span class="dt">&quot;pate&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb24-11" title="11">                    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-12" title="12">                    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-13" title="13">                    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb24-14" title="14">                <span class="fu">},</span></a>
+<a class="sourceLine" id="cb24-15" title="15">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">40</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-16" title="16">                <span class="dt">&quot;ingredients&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb24-17" title="17">                    <span class="dt">&quot;id_pizza&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-18" title="18">                    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span><span class="ot">[</span></a>
+<a class="sourceLine" id="cb24-19" title="19">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb24-20" title="20">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-21" title="21">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-22" title="22">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb24-23" title="23">                        <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb24-24" title="24">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb24-25" title="25">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-26" title="26">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-27" title="27">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb24-28" title="28">                        <span class="fu">}</span></a>
+<a class="sourceLine" id="cb24-29" title="29">                    <span class="ot">]</span></a>
+<a class="sourceLine" id="cb24-30" title="30">                <span class="fu">}</span></a>
+<a class="sourceLine" id="cb24-31" title="31">            <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb24-32" title="32">            <span class="fu">{</span></a>
+<a class="sourceLine" id="cb24-33" title="33">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-34" title="34">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;Margherita&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-35" title="35">                <span class="dt">&quot;pate&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb24-36" title="36">                    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-37" title="37">                    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-38" title="38">                    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb24-39" title="39">                <span class="fu">},</span></a>
+<a class="sourceLine" id="cb24-40" title="40">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">40</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-41" title="41">                <span class="dt">&quot;ingredients&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb24-42" title="42">                    <span class="dt">&quot;id_pizza&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-43" title="43">                    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span><span class="ot">[</span></a>
+<a class="sourceLine" id="cb24-44" title="44">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb24-45" title="45">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-46" title="46">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-47" title="47">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb24-48" title="48">                        <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb24-49" title="49">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb24-50" title="50">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-51" title="51">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-52" title="52">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb24-53" title="53">                        <span class="fu">}</span></a>
+<a class="sourceLine" id="cb24-54" title="54">                    <span class="ot">]</span></a>
+<a class="sourceLine" id="cb24-55" title="55">                <span class="fu">}</span></a>
+<a class="sourceLine" id="cb24-56" title="56">            <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb24-57" title="57">            <span class="fu">{</span></a>
+<a class="sourceLine" id="cb24-58" title="58">                <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-59" title="59">                <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;Margherita&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-60" title="60">                <span class="dt">&quot;pate&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb24-61" title="61">                    <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">4</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-62" title="62">                    <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;pate a pizza&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-63" title="63">                    <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">0.5</span></a>
+<a class="sourceLine" id="cb24-64" title="64">                <span class="fu">},</span></a>
+<a class="sourceLine" id="cb24-65" title="65">                <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">40</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-66" title="66">                <span class="dt">&quot;ingredients&quot;</span><span class="fu">:{</span></a>
+<a class="sourceLine" id="cb24-67" title="67">                    <span class="dt">&quot;id_pizza&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-68" title="68">                    <span class="dt">&quot;ingredients&quot;</span><span class="fu">:</span><span class="ot">[</span></a>
+<a class="sourceLine" id="cb24-69" title="69">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb24-70" title="70">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">1</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-71" title="71">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;tomate&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-72" title="72">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="fl">1.5</span></a>
+<a class="sourceLine" id="cb24-73" title="73">                        <span class="fu">}</span><span class="ot">,</span></a>
+<a class="sourceLine" id="cb24-74" title="74">                        <span class="fu">{</span></a>
+<a class="sourceLine" id="cb24-75" title="75">                            <span class="dt">&quot;id&quot;</span><span class="fu">:</span><span class="dv">2</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-76" title="76">                            <span class="dt">&quot;nom&quot;</span><span class="fu">:</span><span class="st">&quot;mozzarella&quot;</span><span class="fu">,</span></a>
+<a class="sourceLine" id="cb24-77" title="77">                            <span class="dt">&quot;prix&quot;</span><span class="fu">:</span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb24-78" title="78">                        <span class="fu">}</span></a>
+<a class="sourceLine" id="cb24-79" title="79">                    <span class="ot">]</span></a>
+<a class="sourceLine" id="cb24-80" title="80">                <span class="fu">}</span></a>
+<a class="sourceLine" id="cb24-81" title="81">            <span class="fu">}</span></a>
+<a class="sourceLine" id="cb24-82" title="82">        <span class="ot">]</span></a>
+<a class="sourceLine" id="cb24-83" title="83">    <span class="fu">},</span></a>
+<a class="sourceLine" id="cb24-84" title="84">    <span class="dt">&quot;date&quot;</span><span class="fu">:</span><span class="st">&quot;2024-02-22&quot;</span></a>
+<a class="sourceLine" id="cb24-85" title="85"><span class="fu">}</span></a></code></pre></div>
+<p>Réponse.</p>
+<p>Code du status de retour: <strong>201 Created</strong>.<br />
+Sinon <strong>400 Bad Request</strong> si la requête est mauvaise.<br />
+Sinon <strong>401 Unauthorized</strong> si le token n’est pas valide.</p>
+<h1 id="avoir-une-apitoken">Avoir une APIToken</h1>
+<p>Pour cela, il faut.</p>
+<blockquote>
+<p>GET /users/token?login={login}&amp;pwd={pwd}</p>
+</blockquote>
+<p>Requête vers le serveur:<br />
+<strong>{login} =&gt; nom d’utilisateur</strong><br />
+<strong>{pwd} =&gt; mot de passe</strong></p>
+<p>Réponse du serveur:</p>
+<pre class="text"><code>a38eac3d-5f97-4175-b988-dfcdb59fb8b1</code></pre>
+<hr />
+</body>
+</html>
